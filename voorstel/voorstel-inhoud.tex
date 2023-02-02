@@ -3,37 +3,21 @@
 \section{Introductie}%
 \label{sec:introductie}
 
-Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+De nood aan het sneller opleveren van betere code neemt elk jaar toe. \footnote{https://brfplus.co.uk/the-increasing-demand-for-low-code-skills/} Om die reden zijn de eerste Continuous integration/Continous delivery (CI/CD) en deploy pipelines ontwikkeld. Software updates kwamen voorheen minder frequent voor. Het snel uitbrengen van updates werd niet ondersteund door de hardware- en programmeertalen die beschikbaar waren in de jaren 60 \autocite{Jiang2009}. Het kon jaren duren vooraleer een nieuwe update uitgebracht werd. Door de opkomst van Agile methodes in de sofware industrie is het mogelijk geworden om sneller updates uit te brengen. 
 
-\begin{itemize}
-  \item kaderen thema
-  \item de doelgroep
-  \item de probleemstelling en (centrale) onderzoeksvraag
-  \item de onderzoeksdoelstelling
-\end{itemize}
+Met behulp van CI/CD pipelines liggen de huidige release cycli veel dichter bij elkaar. \footnote{https://www.jetbrains.com/teamcity/ci-cd-guide/benefits-of-ci-cd/} Software wordt verwerkt in kleine iteraties waardoor er veel minder kans is op langdurige bugs en of problemen wanneer de deploy stap bereikt wordt. Ook de testfase is veel beter geïntegreerd dankzij deze aanpak. In de verschillende fasen van een CI/CD pipeline wordt er gebruikt gemaakt van secrets. Secrets worden gebruikt voor de beveiliging van allerhande services zoals Docker Hub, GitHub, Kubernetes, Web APIs. De manier waarop omgegaan wordt met deze gevoelige informatie, kan in vraag gesteld worden. \footnote{https://maia.crimew.gay/posts/how-to-hack-an-airline/} Daarom is het belangrijk dat de risico’s in kaart worden gebracht en dat er onderzoek wordt uitgevoerd naar eventuele “best practices” of alternatieven om op een veilige manier om te gaan met secrets. Ieder devops team dat gebruik maakt van een Jenkins pipeline is kwetsbaar en heeft er baat bij om te weten te komen hoe zij dit risico zo laag mogelijk kunnen houden. Het is belangrijk dat zij inzien welke alternatieven mogelijks gebruikt kunnen worden om de integriteit, confidentialiteit en beschikbaarheid van hun pipeline te garanderen.  
 
-Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
-
-De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
-
-Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
-
-Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
-
-%---------- Stand van zaken ---------------------------------------------------
+Binnen dit onderzoek zal gebruik gemaakt worden van de Jenkins software voor het opzetten van een CI/CD server. Via een proof of concept wordt nagegaan voor welke aanvallen deze server het kwetsbaarst is en hoe deze gevoelige informatie gestolen kan worden. Allereerst zal er onderzocht worden op welke manier er wordt omgegaan met secrets binnen de CI/CD server. Daarna is het de bedoeling de verschillende soorten aanvallen die mogelijk zijn op deze CI/CD server in kaart te brengen. Vervolgens wordt onderzocht hoe deze vertrouwelijke informatie geëxtraheerd kan worden via deze aanvallen. Via een testomgeving worden deze aanvallen gedocumenteerd. Uiteindelijk wordt op zoek gegaan naar alternatieve methodes om secrets op een veilige manier te transporteren doorheen het CI/CD proces. Aan de hand van een overzicht worden de “best practices” en eventuele alternatieve methodes in detail beschreven.
 
 \section{State-of-the-art}%
 \label{sec:state-of-the-art}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
+Om na te gaan hoe veilig het is om secrets te gebruiken in een CI/CD pipeline, moet er eerst onderzocht worden hoe deze gevoelige informatie gebruikt worden in deze omgeving. Secrets kunnen opgeslagen worden in omgevingsvariabelen en kunnen gebruikt worden als “secrets as code”. Dit is echter niet de meest veilige manier. \textcite{Pecka2022} tonen aan in hun paper wanneer toegang verkregen wordt tot de CI/CD pipeline, het zeer eenvoudig is om geheime informatie op te halen voor bijvoorbeeld een Kubernetes cluster. Het is dan ook niet meer moeilijk om binnen te treden in de achterliggende infrastructuur. \textcite{Gil} beschrijven hoe het mogelijk is omgevingsvariabelen uit te lezen via een “Poisened Pipeline Execution” aanval. Doordat variabelen ingesteld worden op “configuration as code” niveau, is de kans op dergelijke aanvallen groot. Het is belangrijk dat wanneer secrets op deze manier worden opgeslagen, dit van tijdelijk aard is en dat er op zoek wordt gegaan naar alternatieven zodat deze gevoelige informatie beter beheerd kan worden. Het beheren van vertrouwelijke informatie aan de hand van omgevingsvariabelen en configuratie bestanden blijft een veel gebruikte methode in de praktijk. Er is onvoldoende hygiëne wanneer er wordt omgegaan met secrets zoals blijkt uit de tekst van \autocite{Gil}. 
 
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
+Wanneer secrets gebruikt worden in een devops omgeving is het van belang dat deze op een veilige manier bewaard worden en dat deze vertrouwelijke informatie enkel toegankelijk is voor geautoriseerde personen. Er bestaan verschillende manieren om confidentialiteit, integriteit en beschikbaarheid te garanderen. Door gebruik te maken van encryptie is het mogelijk een extra beschermingslaag te voorzien. \textcite{Kuzminykh2020} beschrijven in hun studie welke aspecten het belangrijkste zijn wanneer er gebruik wordt gemaakt van een managementsysteem om secrets op te slaan.  Eén van de belangrijkste aspecten voor een kleine tot middelgrote organisatie, is het voorzien van een beveiligde communicatie waarbij rekening gehouden wordt met encryptie. \autocite{AaronHaymore} beschrijven waarom het gebruik van deze managementsystemen niet de enigste instrumenten mogen zijn wanneer een devops omgeving beveiligd wordt. De S3 Bucket is een zeer veel gebruikte service om credentials en andere geheime informatie op te slaan binnen een Amazon cloud omgeving. Wanneer dit systeem niet correct geconfigureerd is, is het zeer eenvoudig toegang te verkrijgen tot de achterliggende servers en bijgevolg toegang tot het CI/CD proces. Op het evenement Black Hat USA 2022 \autocite{Gazdag} werd er toegelicht waarom het van cruciaal belang is dat er op een correcte manier omgegaan wordt met geheime informatie. Bij hun aanvallen op CI/CD pipelines, kwamen zij vaak het eerst in aanraking met secrets en daardoor was het eenvoudig toegang te verkrijgen tot de achterliggende software. 
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
+Het is belangrijk dat er bepaalde controleorganen beschikbaar zijn die gebruikt kunnen worden als toegangscontrole wanneer secrets nodig zijn, bijvoorbeeld door het toevoegen van multifactorauthenticatie of een toegangscontrole beleid. Een tweede beschermingslaag boven op de geëncrypteerde connectie is van belang en heeft alleen maar voordelen. Incorrecte implementatie van toegangscontrole zorgt ervoor dat het CI/CD platform niet veilig is en niet vertrouwd kan worden. Uit een onderzoek van USENIX \autocite{Koishybayev2022} blijkt dat toegangscontroles voor secrets zeker nog niet bij alle CI/CD frameworks correct geïmplementeerd zijn.
 
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
-
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
 
 % Voor literatuurverwijzingen zijn er twee belangrijke commando's:
 % \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
@@ -42,31 +26,22 @@ Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle no
 %   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
 %   ...'')
 
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
 
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}%
 \label{sec:methodologie}
 
-Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
+De eerste weken zullen gebruikt worden om een literatuurstudie op te stellen. Op die manier kan de context waarin de onderzoeksvraag verweven zit beter geschetst worden. Dit onderzoek zal gericht zijn op hoe secrets gebruikt worden in deze omgeving. 
 
-Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
+In de volgende fase wordt er op zoek gegaan naar aanvallen die mogelijk zijn op een CI/CD pipeline. Via de informatie die verkregen werd in de vorige fase, is het mogelijk gerichter te onderzoeken welke aanvallen het meest betrekking hebben tot de Jenkins pipeline.  Wanneer een duidelijk overzicht verkregen wordt van de meest nuttige aanvallen, is het de bedoeling deze aanvallen te testen aan de hand van een testomgeving. Via de CI/CD Goat \footnote{https://github.com/cider-security-research/cicd-goat} is het mogelijk vertrouwd te geraken met de verschillende aanvallen. Deze kwetsbare CI/CD omgeving is een hulpinstrument waarop verschillende testen uitgevoerd kunnen worden. Bij de testen zal er onderzocht worden welke rol secrets spelen in het aanvalsproces.  
 
-Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
+De derde fase start met een studie naar alternatieve methodes om  een Jenkins pipeline te beveiligen. Doordat er een bepaalde kennis is over de aanvallen en het Jenkins platform zelf is het mogelijk een Proof of concept (POC) op te stellen. Via deze POC wordt een overzicht verkregen welke beveiligingsmethodes het meest effectief zijn.
 
-Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
+Uiteindelijk wordt een toelichting en advies gegeven waarin de “best practices” en alternatieve methodes omschreven worden. Daarnaast zal er bij deze finale fase een handleiding worden opgesteld om een Jenkins pipeline te beveiligen.
 
-Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
-
-Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
-
-Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
-
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
-
+Er bestaan tal van mogelijkheden om een CI/CD pipeline aan te vallen waardoor deze omgeving redelijk snel aangetast kan worden. Een threat actor die toegang heeft tot de pipeline kan de achterliggende infrastructuur binnendringen wanneer niet op een correcte manier gebruik wordt gemaakt van secrets. Gelukkig door het toevoegen van nieuwe aanvullingen, zoals software om secrets te beheren en extra authenticatie mogelijkheden, kunnen secrets met meer vertrouwen gebruikt worden. Het blijft wel belangrijk om de basisprincipes van security steeds in acht te nemen. Hoe veilig een CI/CD omgeving uiteindelijk is, hangt af van zijn zwakste schakel. Deze zwakste schakel ontstaat nog steeds meestal door een menselijke fout. Het is belangrijk dat het personeel dat gebruik maakt van de CI/CD omgeving goed opgeleid is en dat dit personeel slechts toegang heeft volgens het principe van “least privilege”. 
