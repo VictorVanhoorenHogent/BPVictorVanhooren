@@ -9,7 +9,7 @@ Met behulp van CI/CD pipelines liggen de huidige release cycli veel dichter bij 
 
 Binnen dit onderzoek zal gebruik gemaakt worden van de Jenkins software. Via een proof of concept wordt nagegaan voor welke aanvallen deze server het kwetsbaarst is en hoe deze gevoelige informatie gestolen kan worden.
 
-Allereerst zal er onderzocht worden op welke manier er wordt omgegaan met secrets binnen de Jenkins CI/CD server. Daarna is het de bedoeling de verschillende soorten aanvallen die mogelijk zijn op deze CI/CD server in kaart te brengen. Vervolgens wordt onderzocht hoe deze vertrouwelijke informatie geëxtraheerd kan worden via deze aanvallen. Via een testomgeving worden deze aanvallen gedocumenteerd. Uiteindelijk wordt aan de hand van een POC op zoek gegaan naar methodes om secrets op een veilige manier te gebruiken in een Jenkins omgeving. Aan de hand van een overzicht en handleiding worden de “best practices” en eventuele alternatieve methodes in detail beschreven.
+Allereerst zal er onderzocht worden op welke manier er wordt omgegaan met secrets binnen de Jenkins CI/CD server. Daarna is het de bedoeling de verschillende soorten aanvallen die mogelijk zijn op deze CI/CD server in kaart te brengen. Vervolgens wordt onderzocht hoe deze vertrouwelijke informatie geëxtraheerd kan worden via deze aanvallen. Via een testomgeving worden deze aanvallen gedocumenteerd. Uiteindelijk wordt aan de hand van een Proof of concept (POC) op zoek gegaan naar methodes om secrets op een veilige manier te gebruiken in een Jenkins omgeving. Aan de hand van een overzicht en handleiding worden de “best practices” en eventuele alternatieve methodes in detail beschreven.
 
 \section{State-of-the-art}%
 \label{sec:state-of-the-art}
@@ -37,7 +37,7 @@ De eerste weken zullen gebruikt worden om een literatuurstudie op te stellen. Op
 
 In de volgende fase wordt er op zoek gegaan naar aanvallen die mogelijk zijn op deze CI/CD pipeline. Via de informatie die verkregen werd in de vorige fase, is het mogelijk gerichter te onderzoeken welke aanvallen het meest betrekking hebben tot deze pipeline.  Wanneer een duidelijk overzicht verkregen wordt van de meest gebruikte/nuttige aanvallen, is het de bedoeling deze aanvallen te testen aan de hand van een testomgeving. Via de CI/CD Goat \footnote{https://github.com/cider-security-research/cicd-goat} is het mogelijk vertrouwd te geraken met de verschillende aanvallen. Bij het testen zal er onderzocht worden welke rol secrets spelen in het aanvalsproces.  
 
-De derde fase start met een studie naar alternatieve methodes om  een Jenkins pipeline te beveiligen. Aan de hand van de verkregen kennis over de aanvallen en het Jenkins platform zelf is het mogelijk een Proof of concept (POC) op te stellen. Via deze POC wordt een overzicht verkregen waarin de belangrijkste beveiligingsmethodes naar voren komen.
+De derde fase start met een studie naar alternatieve methodes om  een Jenkins pipeline te beveiligen. Aan de hand van de verkregen kennis over de aanvallen en het Jenkins platform zelf is het mogelijk een POC op te stellen. Via deze POC wordt een overzicht verkregen waarin de belangrijkste beveiligingsmethodes naar voren komen.
 
 Uiteindelijk wordt een toelichting en advies gegeven waarin de “best practices” en alternatieve methodes omschreven worden. Daarnaast zal er bij deze finale fase een handleiding worden opgesteld om een Jenkins pipeline te beveiligen.
 
