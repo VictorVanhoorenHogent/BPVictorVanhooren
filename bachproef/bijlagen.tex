@@ -1,0 +1,796 @@
+%%=============================================================================
+%% Bijlagen
+%%=============================================================================
+
+\chapter{\IfLanguageName{dutch}{Bijlagen}{Appendix}}%
+\label{ch:Bijlagen}
+
+\section{\IfLanguageName{dutch}{Variabelen, inputs, outputs, data sources en locals voor het bouwen van het netwerk en de security groups met terraform}
+{Variables to build the network and the security groups using terraform}}
+\label{sec:Variabelen voor het bouwen van het netwerk en de security groups met terraform}
+
+\subsection{\IfLanguageName{dutch}{VPC}
+{VPC}}
+\label{sec:VPC}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+\label{sec:Input}
+
+\begin{lstlisting}[language=terraform]
+    variable "vpc_cidr" {
+        type = string
+        default = "192.168.0.0/16"
+        
+      }
+      
+      variable "vpc_name" {
+          type = map(any)
+          default = {
+              Name = "My_vpc"
+          }
+        
+      }
+      
+      variable "vpc_enable_dns_hostnames" {
+        type = bool
+        default = true
+      
+        
+      }
+      
+      variable "vpc_enable_dns_support" {
+        type = bool
+        default = true
+      } 
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+\label{sec:Output}
+
+\begin{lstlisting}[language=terraform]
+    output "vpc_id" {
+        value = aws_vpc.main.id
+    }   
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+\label{sec:Variables}
+
+\begin{lstlisting}[language=terraform]
+  vpc_cidr = "192.168.0.0/16"
+
+  vpc_name = {Name = "Victor_vpc_test"}
+  
+  vpc_enable_dns_hostnames = true
+  
+  vpc_enable_dns_support = true
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{VPC security group}
+{VPC security group}}
+\label{sec:VPC security group}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+\label{sec:Input}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_security_group" {
+        type = string
+        default = "testgroup"
+    }
+    
+    variable "aws_security_group_name" {
+        type = map(any)
+        default = {Name = "mysecuritygroup"}
+      
+    }
+    
+    variable "vpc_id" {
+        type = string
+        default = ""
+      
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+\label{sec:Variables}
+
+\begin{lstlisting}[language=terraform]
+  security_group_config = {
+    group1 = {
+        aws_security_group = "security_group_bastion"
+        aws_security_group_name = {Name="securitygroup_bastion"}
+    },  
+    group2 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_name = {Name="securitygroup_jenkins"}
+    }
+
+    group3 = {
+        aws_security_group = "security_group_lb"
+        aws_security_group_name = {Name="securitygroup_lb"}
+    }
+    group4 = {
+        aws_security_group = "security_group_jenkins_slaves"
+        aws_security_group_name = {Name="securitygroup_jenkins_slaves"}
+    }
+}
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{VPC security group rules}
+{VPC security group rules}}
+\label{sec:VPC security group regels}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+\label{sec:Input}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_security_group" {
+        type = string
+        default = "testgroup"
+    }
+    
+    variable "aws_security_group_from" {
+      type = number
+    }
+    
+    variable "aws_security_group_to" {
+      type = number
+    }
+    
+    variable "aws_security_group_rule_protocol" {
+      type = string
+    }
+    
+    variable "aws_security_group_cidr" {
+        type = string
+      
+    }   
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Data source}
+{Data source}}
+\label{sec:Data source}
+
+\begin{lstlisting}[language=terraform]
+    # Data block om de security group id op te halen van de source
+    data "aws_security_group" "source" {
+    
+        # Variabele die gebruikt wordt om deze id op te halen
+        name = var.aws_security_group_source
+      
+    }
+    
+    # Data block om de security group id op te halen waar de rule aan gelinkt zal worden
+    data "aws_security_group" "name" {
+    
+        # Variabele die gebruikt wordt om deze naam op te halen
+        name = var.aws_security_group
+      
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{locals}
+{Locals}}
+\label{sec:Locals}
+
+\begin{lstlisting}[language=terraform]
+    # Bepalen of de cidr variable leeg is of niet
+    locals {
+    
+      # Gebruik maken van de length function om te bepalen of de security group cidr is leeg, indien leeg return a null object
+      cidr_ipv4 = length(var.aws_security_group_cidr) > 0 ? var.aws_security_group_cidr : null
+    }
+    
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+\label{sec:Variables}
+
+\begin{lstlisting}[language=terraform]
+  security_group_ingress_rules_config = {
+    rule1 = {
+        aws_security_group = "security_group_bastion"
+        aws_security_group_from = 22
+        aws_security_group_to = 22
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "tcp"
+        aws_security_group_cidr = "0.0.0.0/0"
+
+    },
+    rule2 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_from = 8080
+        aws_security_group_to = 8080
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "tcp"
+        aws_security_group_cidr = "0.0.0.0/0"
+    },
+    rule3 = {
+        aws_security_group = "security_group_lb"
+        aws_security_group_from = 80
+        aws_security_group_to = 80
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "tcp"
+        aws_security_group_cidr = "0.0.0.0/0"
+    }
+    rule4 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_from = 9000
+        aws_security_group_to = 9000
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "tcp"
+        aws_security_group_cidr = "0.0.0.0/0"
+    },
+
+}
+
+security_group_ingress_rules_config_nocidr = {
+    rule1 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_from = 22
+        aws_security_group_to = 22
+        aws_security_group_source = "security_group_bastion"
+        aws_security_group_rule_protocol = "tcp"
+
+    },
+    rule2 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_from = 8080
+        aws_security_group_to = 8080
+        aws_security_group_source = "security_group_lb"
+        aws_security_group_rule_protocol = "tcp"
+    }
+    rule3 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_from = 9000
+        aws_security_group_to = 9000
+        aws_security_group_source = "security_group_lb"
+        aws_security_group_rule_protocol = "tcp"
+    },
+    rule4 = {
+        aws_security_group = "security_group_jenkins_slaves"
+        aws_security_group_from = 22
+        aws_security_group_to = 22
+        aws_security_group_source = "security_group_jenkins"
+        aws_security_group_rule_protocol = "tcp"
+    },
+
+}
+
+security_group_egress_rules_config = {
+    rule1 = {
+        aws_security_group = "security_group_bastion"
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "-1"
+        aws_security_group_cidr = "0.0.0.0/0"
+
+    },
+    rule2 = {
+        aws_security_group = "security_group_jenkins"
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "-1"
+        aws_security_group_cidr = "0.0.0.0/0"
+    },
+    rule3 = {
+        aws_security_group = "security_group_lb"
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "-1"
+        aws_security_group_cidr = "0.0.0.0/0"
+    },
+    rule4 = {
+        aws_security_group = "security_group_jenkins_slaves"
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "-1"
+        aws_security_group_cidr = "0.0.0.0/0"
+    }
+
+}
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Internet gateway}
+{Internet gateway}}
+\label{sec:Internet gateway}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+\label{sec:Input}
+
+\begin{lstlisting}[language=terraform]
+    variable "vpc_id" {
+        type = string
+        default = "myvpcid"
+    
+    }
+    
+    variable "aws_internet_gateway_name" {
+        type = map(any)
+        default = {
+          "Name" = "mygateway" 
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+\label{sec:Output}
+
+\begin{lstlisting}[language=terraform]
+    output "aws_internet_gateway_id" {
+        value = aws_internet_gateway.name.id
+      
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+\label{sec:Variables}
+
+\begin{lstlisting}[language=terraform]
+    aws_internet_gateway_name = {Name = "victorsgateway"}     
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Private en publieke subnets, nat gateways, AWS elastic ip-adressen en private route tabellen}
+{Private en public subnets, nat gateways and AWS elastic ip-addresses and private routing tables}}
+\label{sec:Private en publieke subnets, nat gateways and AWS elastic ip-adressen en private route tabellen}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+\label{sec:Input}
+
+\begin{lstlisting}[language=terraform]
+    variable "vpc_id" {
+        type = string
+        default = "myvpcid"
+    
+    }
+    
+    variable "public_subnet_cidr" {
+        type = string
+        default = "192.168.0.0/18"
+      
+    }
+    
+    variable "public_subnet_tags" {
+        type = map(any)
+        default = {
+            Name = "my_subnet"
+            "kubernetes.io/cluster/eks" = "shared"
+            "kubernetes.io/role/elb" = 1
+            
+        }
+      
+    }
+    
+    variable "public_subnet_availability_zone" {
+        type = string
+        default = "eu-north-1a"
+      
+    }
+    
+    variable "public_subnet_publicip_onlaunch" {
+      type = bool
+      default = true
+      
+    }
+
+    variable "aws_eip_name" {
+        type = map(any)
+        default = {
+        Name = "nat1" 
+        }
+    
+    }
+
+    variable "aws_nat_gateway_name" {
+        type = map(any)
+        default = {
+          Name = "mynatgateway"
+        }
+    }
+      
+    variable "aws_eip_id" {
+        type = string
+        default = "test"
+    }
+      
+    variable "public_subnet_id" {
+        type = string 
+        default = "test"
+    }
+
+    variable "aws_route_table_private_cidr" {
+        type = string
+        default = "0.0.0.0/0"
+    }
+    
+    variable "aws_nat_gateway_id" {
+        type = string
+    }
+    
+    variable "aws_route_table_private_name" {
+        type = map(any)
+        default = {
+            Name = "myprivateroute"
+            }
+    }
+
+    variable "aws_subnet_private_id" {
+        type = string
+    }
+    
+    variable "aws_route_table_private_id" {
+        type = string
+    }   
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+\label{sec:Output}
+
+\begin{lstlisting}[language=terraform]
+    output "private_subnet_id" {
+        value = aws_subnet.private_subnet.id
+    }
+
+    output "public_subnet_id" {
+        value = aws_subnet.public_subnet.id
+    }
+
+    output "aws_eip_id" {
+        value = aws_eip.nat1.id
+    }
+
+    output "aws_nat_gateway_id" {
+        value = aws_nat_gateway.example.id
+    }
+
+    output "aws_route_table_private_id" {
+        value = aws_route_table.route_table_private.id
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+\label{sec:Variables}
+
+\begin{lstlisting}[language=terraform]
+    private_subnet_config = {
+        subnet1 = {
+    
+            private_subnet_cidr = "192.168.64.0/19"
+            private_subnet_tags = {"Name" = "private-eu-north-1a"
+            "kubernetes.io/cluster/eks" = "shared"
+            "kubernetes.io/role/internal-elb" = 1
+            }
+            private_subnet_availability_zone = "eu-north-1a"
+    
+            aws_eip_name = {Name="nat1"}
+    
+            aws_nat_gateway_name = {Name="NAT1"}
+    
+            aws_route_table_private_cidr = "0.0.0.0/0"
+            aws_route_table_private_name = {Name="myprivateroute1"}
+        }
+    
+        subnet2 = {
+    
+            private_subnet_cidr = "192.168.96.0/19"
+            private_subnet_tags = {"Name" = "private-eu-north-1b"
+            "kubernetes.io/cluster/eks" = "shared"
+            "kubernetes.io/role/internal-elb" = 1
+            }
+            private_subnet_availability_zone = "eu-north-1b"
+    
+            aws_eip_name = {Name="nat2"}
+    
+            aws_nat_gateway_name = {Name="NAT2"}
+    
+            aws_route_table_private_cidr = "0.0.0.0/0"
+            aws_route_table_private_name = {Name="myprivateroute2"}
+        },
+    
+        subnet3 = {
+            private_subnet_cidr = "192.168.0.0/19"
+            private_subnet_tags = {"Name" = "private-eu-north-1c"
+            }
+            private_subnet_availability_zone = "eu-north-1c"
+    
+            aws_eip_name = {Name="nat3"}
+    
+            aws_nat_gateway_name = {Name="NAT3"}
+    
+            aws_route_table_private_cidr = "0.0.0.0/0"
+            aws_route_table_private_name = {Name="myprivateroute3"}
+    
+        }  
+    
+    }
+    
+    public_subnet_config = {
+        
+        subnet1 = {
+            public_subnet_cidr = "192.168.128.0/19"
+            public_subnet_tags = {"Name" = "public-eu-north-1a"
+            "kubernetes.io/cluster/eks" = "shared"
+            "kubernetes.io/role/elb" = 1
+            }
+            public_subnet_availability_zone = "eu-north-1a"
+            public_subnet_publicip_onlaunch = true
+    
+            
+        },
+    
+        subnet2 = {
+            public_subnet_cidr = "192.168.160.0/19"
+            public_subnet_tags = {"Name" = "public-eu-north-1b"
+            "kubernetes.io/cluster/eks" = "shared"
+            "kubernetes.io/role/elb" = 1
+            }
+            public_subnet_availability_zone = "eu-north-1b"
+            public_subnet_publicip_onlaunch = true
+        },
+    
+        subnet3 = {
+            public_subnet_cidr = "192.168.32.0/19"
+            public_subnet_tags = {"Name" = "public-eu-north-1c"
+            }
+            public_subnet_availability_zone = "eu-north-1c"
+            public_subnet_publicip_onlaunch = true
+    
+    
+        } 
+    
+    }   
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Publieke route tabellen}
+{Public routing tables}}
+\label{sec:Publieke route tabellen}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+\label{sec:Input}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_vpc_id" {
+        type = string
+    }
+    
+    variable "aws_route_table_public_cidr" {
+        type = string
+        default = "0.0.0.0/0"
+    }
+    
+    variable "aws_internet_gateway_id" {
+        type = string
+    }
+    
+    variable "aws_route_table_public_name" {
+        type = map(any)
+        default = {
+            Name = "mypublicroute"
+            }
+    }
+
+    variable "aws_subnet_public_id" {
+        type = string
+    }
+    
+    variable "aws_route_table_public_id" {
+        type = string
+    }    
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+\label{sec:Output}
+
+\begin{lstlisting}[language=terraform]
+    output "aws_route_table_public_id" {
+        value = aws_route_table.route_table_public.id
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+\label{sec:Variables}
+
+\begin{lstlisting}[language=terraform]
+    aws_route_table_public_cidr = "0.0.0.0/0"
+    aws_route_table_public_name = {Name="mypublicroute"}
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Overzicht van de modules}
+{Overview of the modules}}
+\label{sec:Overzicht van de modules}
+
+\begin{lstlisting}[language=terraform]
+    module "aws_vpc" {
+        source = "./modules/vpc"
+        vpc_cidr = var.vpc_cidr
+        vpc_name = var.vpc_name
+        vpc_enable_dns_hostnames = var.vpc_enable_dns_hostnames
+        vpc_enable_dns_support = var.vpc_enable_dns_support     
+    }
+    
+    module "aws_security_groups" {
+        source = "./modules/aws_security_group"
+        depends_on = [
+          module.aws_vpc
+        ]
+        for_each = var.security_group_config
+    
+        aws_security_group = each.value.aws_security_group
+        aws_security_group_name = each.value.aws_security_group_name
+        vpc_id = module.aws_vpc.vpc_id
+      
+    }
+    
+    module "aws_security_group_rule_ingress" {
+      source = "./modules/aws_security_group_rule_ingress"
+      depends_on = [
+        module.aws_security_groups
+      ]
+      for_each = var.security_group_ingress_rules_config
+    
+      aws_security_group = each.value.aws_security_group
+      aws_security_group_from = each.value.aws_security_group_from
+      aws_security_group_rule_protocol = each.value.aws_security_group_rule_protocol
+      aws_security_group_to = each.value.aws_security_group_to
+      aws_security_group_cidr = each.value.aws_security_group_cidr
+      
+    }
+    
+    module "aws_security_group_rule_ingres_nocidr" {
+      source = "./modules/aws_security_group_rule_ingress_nocidr"
+      depends_on = [
+        module.aws_security_groups
+      ]
+      for_each = var.security_group_ingress_rules_config_nocidr
+    
+      aws_security_group = each.value.aws_security_group
+      aws_security_group_from = each.value.aws_security_group_from
+      aws_security_group_source = each.value.aws_security_group_source
+      aws_security_group_rule_protocol = each.value.aws_security_group_rule_protocol
+      aws_security_group_to = each.value.aws_security_group_to
+      
+    }
+    
+    module "aws_security_group_rule_egress" {
+      source = "./modules/aws_security_group_rule_egress"
+      depends_on = [
+        module.aws_security_groups
+      ]
+      for_each = var.security_group_egress_rules_config
+    
+      aws_security_group = each.value.aws_security_group
+      aws_security_group_rule_protocol = each.value.aws_security_group_rule_protocol
+      aws_security_group_cidr = each.value.aws_security_group_cidr
+      
+    }
+    
+    module "aws_internet_gateway" {
+        source = "./modules/aws_internet_gateway"
+        vpc_id = module.aws_vpc.vpc_id
+        aws_internet_gateway_name = var.aws_internet_gateway_name
+    }
+    
+    module "private_subnet" {
+        source = "./modules/privateSubnet"
+        vpc_id = module.aws_vpc.vpc_id
+    
+        for_each = var.private_subnet_config
+    
+        private_subnet_availability_zone = each.value.private_subnet_availability_zone
+        private_subnet_cidr = each.value.private_subnet_cidr
+        private_subnet_tags = each.value.private_subnet_tags
+      
+    }
+    
+    module "public_subnet" {
+        source = "./modules/publicSubnet"
+        vpc_id = module.aws_vpc.vpc_id
+    
+        for_each = var.public_subnet_config
+    
+        public_subnet_availability_zone = each.value.public_subnet_availability_zone
+        public_subnet_cidr = each.value.public_subnet_cidr
+        public_subnet_tags = each.value.public_subnet_tags
+        public_subnet_publicip_onlaunch = each.value.public_subnet_publicip_onlaunch
+      
+    }
+    
+    module "aws_eip" {
+        source = "./modules/aws_eip"
+        depends_on = [
+          module.aws_internet_gateway   
+        ]
+    
+        for_each = var.private_subnet_config
+    
+        aws_eip_name = each.value.aws_eip_name
+      
+    }
+    
+    
+    
+    module "aws_nat_gateway" {
+        source = "./modules/aws_nat_gateway"
+        depends_on = [
+          module.aws_eip, module.public_subnet
+        ]
+    
+        for_each = var.private_subnet_config
+    
+        aws_eip_id = module.aws_eip[each.key].aws_eip_id
+        public_subnet_id = module.public_subnet[each.key].public_subnet_id
+        aws_nat_gateway_name = each.value.aws_nat_gateway_name
+    
+    }
+    
+    module "aws_route_table_private" {
+        source = "./modules/aws_route_table_private"
+        depends_on = [
+          module.aws_nat_gateway
+        ]
+    
+        for_each = var.private_subnet_config
+    
+        aws_nat_gateway_id = module.aws_nat_gateway[each.key].aws_nat_gateway_id
+        aws_route_table_private_cidr = each.value.aws_route_table_private_cidr
+        aws_route_table_private_name = each.value.aws_route_table_private_name
+        aws_vpc_id = module.aws_vpc.vpc_id
+      
+    }
+    
+    module "aws_route_table_public" {
+        source = "./modules/aws_route_table_public"
+        depends_on = [
+          module.aws_nat_gateway
+        ]
+    
+        aws_internet_gateway_id = module.aws_internet_gateway.aws_internet_gateway_id
+        aws_route_table_public_cidr = var.aws_route_table_public_cidr
+        aws_route_table_public_name = var.aws_route_table_public_name
+        aws_vpc_id = module.aws_vpc.vpc_id
+    }
+    
+    
+    
+    module "aws_route_table_association_private" {
+      source = "./modules/aws_route_table_association_private"
+      depends_on = [
+        module.aws_route_table_private
+      ]
+    
+      for_each = var.private_subnet_config
+    
+      aws_route_table_private_id = module.aws_route_table_private[each.key].aws_route_table_private_id
+      aws_subnet_private_id = module.private_subnet[each.key].private_subnet_id
+    
+    }
+    
+    module "aws_route_table_association_public" {
+      source = "./modules/aws_route_table_association_public"
+      depends_on = [
+        module.aws_route_table_public
+      ]
+    
+      for_each = var.public_subnet_config
+    
+      aws_route_table_public_id = module.aws_route_table_public.aws_route_table_public_id
+      aws_subnet_public_id = module.public_subnet[each.key].public_subnet_id
+      
+    }
+\end{lstlisting}
+
+
+

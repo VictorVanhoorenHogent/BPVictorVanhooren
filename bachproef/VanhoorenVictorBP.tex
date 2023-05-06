@@ -46,6 +46,147 @@
 }
 
 % Other packages not already included can be imported here
+\usepackage{xcolor}
+\usepackage{listings}
+
+
+% Define Dockerfile listing style
+\lstdefinestyle{dockerfile}{
+  basicstyle=\footnotesize\ttfamily\color{black},
+  backgroundcolor=\color{gray!5},
+  keywordstyle=\color{blue},
+  keywords={FROM, RUN, COPY, ADD, ENV, WORKDIR, EXPOSE},
+  breaklines=true,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+  tabsize=2,
+  showstringspaces=false,
+  commentstyle=\color{green!70!black},
+  stringstyle=\color{orange},
+  captionpos=b,
+  framesep=10pt,
+  xleftmargin=15pt,
+  framexleftmargin=5pt,
+  framexrightmargin=5pt,
+  framextopmargin=5pt,
+  framexbottommargin=5pt
+}
+
+% Define Dockerfile language for lstlisting
+\lstdefinelanguage{Dockerfile}{
+  morekeywords={FROM, RUN, COPY, ADD, ENV, WORKDIR, EXPOSE},
+  morecomment=[l]{\#},
+  commentstyle=\color{green!70!black},
+  morestring=[b]",
+  stringstyle=\color{orange}
+}
+
+\lstset{
+  language=Java,
+  basicstyle=\footnotesize\ttfamily\color{black},
+  backgroundcolor=\color{gray!5},
+  keywordstyle=\color{blue},
+  keywords={public, class, static, void, main, String},
+  breaklines=true,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+  tabsize=2,
+  showstringspaces=false,
+  commentstyle=\color{gray},
+  stringstyle=\color{green!50!black},
+  captionpos=b,
+  framesep=10pt,
+  xleftmargin=15pt,
+  framexleftmargin=5pt,
+  framexrightmargin=5pt,
+  framextopmargin=5pt,
+  framexbottommargin=5pt
+}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{gray!5},
+    basicstyle=\footnotesize\ttfamily\color{black},
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    identifierstyle=\color{purple},
+    showstringspaces=false,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    language=Java,
+    captionpos=b,
+    frame=single,
+    framerule=0pt,
+    framesep=10pt,
+    xleftmargin=15pt,
+    framexleftmargin=5pt,
+    framexrightmargin=5pt,
+    framextopmargin=5pt,
+    framexbottommargin=5pt,
+    tabsize=4,
+    morekeywords={public, class, static, void},
+    keywordstyle=\color{blue},
+    morekeywords=[2]{App},
+    keywordstyle=[2]\color{green!50!black},
+    morestring=[b]",
+    stringstyle=\color{orange},
+    morecomment=[l]{//},
+    commentstyle=\color{green!50!black}
+}
+
+% Define Kubernetes YAML listing style
+\lstdefinestyle{kubernetesyaml}{
+  basicstyle=\footnotesize\ttfamily\color{black},
+  backgroundcolor=\color{gray!5},
+  keywordstyle=\color{blue},
+  keywords={apiVersion, kind, metadata, spec, containers, name, image, port, protocol},
+  stringstyle=\color{orange},
+  commentstyle=\color{green},
+  captionpos=b,
+  framesep=10pt,
+  xleftmargin=15pt,
+  framexleftmargin=5pt,
+  framexrightmargin=5pt,
+  framextopmargin=5pt,
+  framexbottommargin=5pt
+}
+
+% Define Kubernetes YAML language for lstlisting
+\lstdefinelanguage{kubernetesyaml}{
+  keywords={apiVersion, kind, metadata, spec, containers, name, image, port, protocol},
+  sensitive=false,
+  comment=[l]{\#},
+  morestring=[b]',
+  morestring=[b]",
+  moredelim=[s][\color{blue}\ttfamily]{:}{\ },
+  moredelim=[s][\color{orange}\ttfamily]{=}{\ },
+  moredelim=[l][\color{green}]{\#}
+}
+
+\definecolor{codegreen}{RGB}{60,128,49}
+\definecolor{codeorange}{RGB}{204,96,0}
+\definecolor{codeblue}{RGB}{0,96,204}
+\definecolor{codeskyblue}{RGB}{51,153,204}
+\definecolor{codepurple}{RGB}{128,0,128}
+
+\lstdefinelanguage{terraform}{
+    morekeywords=[1]{resource,data,locals,module,provider,variable,output,terraform},
+    keywordstyle=[1]\color{codegreen},
+    morekeywords=[2]{count,for_each,if,else},
+    keywordstyle=[2]\color{codeblue},
+    morekeywords=[3]{true,false},
+    keywordstyle=[3]\color{codepurple},
+    morestring=[b]",
+    stringstyle=\color{black},
+    comment=[l]{\#},
+    commentstyle=\color{codeorange}\ttfamily,
+    identifierstyle=\color{codeskyblue},
+    sensitive=true,
+    keepspaces=true,
+    breaklines=true,
+    tabsize=2,
+}
+
+\usepackage{dirtree}
 
 %%---------- Document metadata -------------------------------------------------
 % TODO: Replace this with your own information
@@ -99,7 +240,9 @@
 
 %---------- Inhoud, lijst figuren, ... -----------------------------------------
 
+\setcounter{tocdepth}{3}
 \tableofcontents
+
 
 % In a list of figures, the complete caption will be included. To prevent this,
 % ALWAYS add a short description in the caption!
@@ -132,6 +275,7 @@
 \input{inleiding}
 \input{standvanzaken}
 \input{methodologie}
+\input{proofofconcept}
 
 % Voeg hier je eigen hoofdstukken toe die de ``corpus'' van je bachelorproef
 % vormen. De structuur en titels hangen af van je eigen onderzoek. Je kan bv.
@@ -163,6 +307,7 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 % TODO: Voeg hier eventuele andere bijlagen toe. Bv. als je deze BP voor de
 % tweede keer indient, een overzicht van de verbeteringen t.o.v. het origineel.
 %\input{...}
+\input{bijlagen}
 
 %%---------- Backmatter, referentielijst ---------------------------------------
 
