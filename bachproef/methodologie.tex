@@ -11,5 +11,16 @@
 %% mogelijke manier toegepast hebt om een antwoord te vinden op de
 %% onderzoeksvraag.
 
-\lipsum[21-25]
+In de eerste fase van het onderzoek wordt er op zoek gegaan naar kwalitatieve bronnen aan de hand van een literatuurstudie. Om te begrijpen hoe geheime informatie gestolen kan worden uit de pipeline, wordt eerst onderzocht hoe screts gebruikt worden in deze omgeving. Het gebruik van secrets wordt ook vanuit andere perspectieven benaderd zoals het gebruik van secrets in IAC. De volgende stap binnen de literatuurstudie wordt gebruikt om te analyseren hoe secrets op een kwaadaardige manier geëxtraheerd kunnen worden uit de pipeline. De bronnen die gebruikt worden om dit deel te verduidelijken zijn voornamelijk gebaseerd op forum posts en hacker conferenties. De laatste stap van de literatuurstudie bevat bronnen waarin beschreven staat hoe secrets het best gebruikt worden en welke maatregelen er genomen kunnen worden om deze geheime informatie te beschermen.
+\newline
+
+Na het opstellen van een duidelijke literatuurstudie is het de bedoeling te starten met de POC. De POC bestaat uit twee grote delen. Het eerste deel van de POC wordt gebruikt om de omgeving op te zetten die gebruikt zal worden voor het uitvoeren van verschillende aanvallen.
+\newline
+
+De opbouw van deze omgeving wordt zoveel mogelijk geautomatiseerd door gebruik te maken van Terraform. Allereerst wordt het netwerk opgebouwd waar de infrastructuur van gebruik zal maken. Vervolgens is het de bedoeling de infrastructuur op te zetten die gebruikt zal worden door de CI/CD pipeline. De laatste stap van het bouwproces omvat het opbouwen van de CI/CD pipeline. Deze pipeline bestaat uit een CI deel dat voorzien wordt door Jenkins en een CD deel dat voorzien wordt door Argocd.
+\clearpage
+
+Het volgende deel van de Proof of Concept (POC) behandelt de uitgevoerde aanvallen op de omgeving. Dit gedeelte begint met het onderzoeken van demo's van bestaande aanvallen. Vervolgens worden deze aanvallen aangepast zodat ze kunnen worden uitgevoerd op de opgebouwde omgeving. Om de aanvallen correct te kunnen uitvoeren, wordt er een demonstratieopstelling gemaakt. Deze opstelling bestaat uit een desktop met de opgebouwde omgeving en een laptop vanaf waar aanvallen worden uitgevoerd. Het hoofddoel van dit deel van de POC is het succesvol uitvoeren van de aanvallen op de omgeving. Na het voltooien van de aanvallen worden de bevindingen gedocumenteerd om de beveiligingsproblemen in de omgeving te identificeren en mogelijke oplossingen voor te stellen.
+
+
 

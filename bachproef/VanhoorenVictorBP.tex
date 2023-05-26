@@ -48,6 +48,7 @@
 % Other packages not already included can be imported here
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{mdframed}
 
 
 % Define Dockerfile listing style
@@ -186,15 +187,125 @@
     tabsize=2,
 }
 
+% Define AWS IAM Policy listing style
+\lstdefinestyle{awsiampolicy}{
+  basicstyle=\footnotesize\ttfamily\color{red},
+  backgroundcolor=\color{gray!5},
+  keywordstyle=\color{red},
+  keywords={Effect, Action, Resource, Sid, Version, Statement},
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  captionpos=b,
+  framesep=10pt,
+  xleftmargin=15pt,
+  framexleftmargin=5pt,
+  framexrightmargin=5pt,
+  framextopmargin=5pt,
+  framexbottommargin=5pt
+}
+
+% Define AWS IAM Policy language for lstlisting
+\lstdefinelanguage{awsiampolicy}{
+  keywords={Effect, Action, Resource, Sid, Version, Statement},
+  sensitive=false,
+  comment=[l]{\#},
+  morestring=[b]',
+  morestring=[b]",
+  moredelim=[s][\color{black}\ttfamily]{:}{\ },
+  moredelim=[s][\color{black}\ttfamily]{,}{\ },
+  moredelim=[s][\color{black}\ttfamily]{\[}{\ },    moredelim=[s][\color{black}\ttfamily]{\]}{\ },
+  moredelim=[s][\color{black}\ttfamily]{\{}{\ },
+  moredelim=[s][\color{black}\ttfamily]{\}}{\ },
+  morecomment=[l][\color{gray}]{\#}
+}
+
+% Define YAML listing style
+\lstdefinestyle{yamlstyle}{
+  backgroundcolor=\color{gray!5},
+  basicstyle=\small\ttfamily\color{blue},
+  commentstyle=\color{orange},
+  keywordstyle=\color{blue},
+  stringstyle=\color{orange},
+  emph={true,false,null},
+  breaklines=true,
+  frame=tb,
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=12pt,
+  framexleftmargin=10pt,
+  framexrightmargin=10pt,
+  aboveskip=4pt,
+  belowskip=4pt
+}
+
+% Define YAML language for lstlisting
+\lstdefinelanguage{yaml}{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{blue},
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{orange},
+  stringstyle=\color{orange},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+% Define Bash listing style
+\lstdefinestyle{bashstyle}{
+  backgroundcolor=\color{gray!5},
+  basicstyle=\small\ttfamily,
+  commentstyle=\color{green!50!black},
+  keywordstyle=\color{blue},
+  stringstyle=\color{orange},
+  showstringspaces=false,
+  captionpos=b,
+  xleftmargin=12pt,
+  framexleftmargin=10pt,
+  framexrightmargin=10pt,
+  aboveskip=4pt,
+  belowskip=4pt,
+}
+
+% Define Bash language for lstlisting
+\lstdefinelanguage{bash}{
+  keywords={alias, bg, bind, break, builtin, cd, command, continue, declare, dirs, disown, echo, enable, eval, exec, exit, export, fc, fg, getopts, hash, help, history, if, jobs, kill, let, local, logout, popd, printf, pushd, pwd, read, readonly, return, set, shift, shopt, source, suspend, test, times, trap, type, typeset, ulimit, umask, unalias, unset, wait},
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{orange},
+  morestring=[b]',
+  morestring=[b]",
+  literate={\$}{{\textcolor{blue}\$}}1,
+  tabsize=2
+}
+
+% Define the lstset for Python code
+\lstdefinestyle{python}{
+  language=python,
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{gray!5},
+  commentstyle=\color{green!60!black},
+  keywordstyle=\color{blue},
+  stringstyle=\color{orange},
+  showstringspaces=false,
+  breaklines=true,
+  frame=none,
+  aboveskip=1em,
+  belowskip=1em
+}
+
+
 \usepackage{dirtree}
 
 %%---------- Document metadata -------------------------------------------------
 % TODO: Replace this with your own information
 \author{Victor Vanhooren}
-\supervisor{Dhr. F. Van Houte}
-\cosupervisor{Mevr. S. Beeckman}
-\title[Optionele ondertitel]%
-    {Titel van de bachelorproef}
+\supervisor{Sofie Lambert}
+\cosupervisor{Stijn Vandenbussche}
+\title[]%
+    {Beveiliging van secrets in een Jenkins pipeline: Evaluatie van bestaande \newline maatregelen en voorstellen voor \newline oplossingen.}
 \academicyear{\advance\year by -1 \the\year--\advance\year by 1 \the\year}
 \examperiod{1}
 \degreesought{\IfLanguageName{dutch}{Professionele bachelor in de toegepaste informatica}{Bachelor of applied computer science}}
@@ -203,6 +314,7 @@
 
 %% Add global exceptions to the hyphenation here
 \hyphenation{back-slash}
+\hyphenation{software-updates}
 
 %% The bibliography (style and settings are  found in hogentthesis.cls)
 \addbibresource{bachproef.bib}            %% Bibliography file

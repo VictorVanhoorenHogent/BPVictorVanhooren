@@ -14,5 +14,72 @@
 % Heeft het onderzoek geleid tot nieuwe vragen die uitnodigen tot verder 
 %onderzoek?
 
-\lipsum[76-80]
+In deze scriptie is een POC uitgevoerd waarbij een omgeving is gecreëerd met een Jenkins CI/CD pipeline. Door het uitvoeren van verschillende aanvallen op deze omgeving zijn diverse beveiligingsproblemen aan het licht gekomen. In deze thesis wordt ingegaan op deze beveiligingsproblemen en wordt besproken hoe ze kunnen worden aangepakt en hoe ze vermeden kunnen worden. Op die manier kan de beveiliging van de omgeving worden verbeterd en de veiligheid van de toepassingen die erop draaien, worden gewaarborgd.
+\newline
+
+Het gebruik van een Jenkins pipeline in de POC zorgde ervoor dat applicaties op een gestroomlijnde en geautomatiseerde manier gebouwd, getest en geimplementeerd konden worden. Tijdens het uitvoeren van de aanvallen werden als snel kwetsbaarheden ontdekt die de veiligheid van de pipeline en daarmee de verbonden applicaties in gevaar brachten.
+\newline
+
+Het onderzoek toonde aan dat de CI/CD omgeving zeer gevoeling is voor aanvallen. Zelfs met een beperkt aantal configuratie fouten, zoals onjuist geconfigureerde toeganganscontroles of ontoereikende beveiligingsmaatregelen, konden aanvallers al snel een opening vinden om de pipeline te infiltreren. Het aanvalsoppervlak van de omgeving is zeer uitgebreid, waardoor het uitermate uitdagend is om alle aspecten van de omgeving volledig te beveiligen. Het is belangrijk om te beseffen dat de beveiliging van een systeem slechts zo sterk is als de zwakste schakel binnen dat systeem.
+\clearpage
+
+Bovendien werd duidelijk dat veel aanvallen voorkomen hadden kunnen worden indien het startpunt van de pipeline, namelijk het versiebeheersysteem, beter beveiligd was geweest. Met behulp van pull requests is het voor aanvallers namelijk heel eenvoudig om hun aanval te initiëren. Het nemen van beveiligingsmaatregelen met betrekking tot branches en het beheer van toegangsrechten binnen de repository, zou al veel bijdragen aan het voorkomen van dergelijke aanvallen.
+\newline
+
+Gelukkig zijn er maatregelen beschikbaar om aanvallen op de Jenkins-pipeline te voorkomen. Het is van essentieel belang om de documentatie van Jenkins nauwkeurig te volgen. Daarnaast is het cruciaal om bij het gebruik van externe elementen grondige controles uit te voeren en alleen minimale rechten toe te kennen. Een ander belangrijk aspect waaraan aandacht besteed moet worden bij het opzetten van een pipeline, is secrets hygiëne.
+\newline
+
+Bovendien is het van groot belang om de basisprincipes van beveiliging zo veel mogelijk te volgen. Hieronder vallen het principe van ''least privilege'' (waarbij alleen de minimale rechten worden verleend die nodig zijn), het scheiden van netwerken en omgevingen, het implementeren van verschillende beveiligingslagen en het actief monitoren van de omgeving. Door deze maatregelen toe te passen, kan een aanval op de pipeline worden voorkomen, waardoor het risico op een mogelijke supply chain-aanval wordt verkleind.
+\newline
+
+Het onderzoek benadrukt de noodzaak om verder te analyseren in hoeverre een aanvaller uit de pipeline kan ontsnappen. Het is essentieel om te begrijpen hoe gemakkelijk een aanvaller in staat is te ontsnappen en welke schade hij kan aanrichten nadat hij deze beveiligingslaag heeft doorbroken. Dit omvat een uitgebreide beoordeling van potentiële aanvalsscenario's en hun mogelijke impact op de deployment-omgeving.
+
+
+% deze proef ilustreert dat wanneer er gebruik wordt gemaakt van secrets in de pipeline deze vatbaar zijn voor aanvallen
+% \newline
+
+% aanvallen kunnen rap escalren tot supply chain aanvallen
+% \newline
+
+% praten over dat een pipeline vaak in connectie staat met heel wat belangrijke componenten in de omgeving dus moet zeker goed beveiligd worden recent supply chain attacks hebben veel schade aangericht
+% \newline
+
+% meerwaarde deze proef kan een idee geven wat de initiele gevaren zijn wanneer gebruik wordt gemaakt van jenkins en wat er zeker niet moet gedaan worden
+% \newline
+
+% de doelgroep ontdekt mss zwakke punten in hun eigen pipeline waar ze eerde niet aan dachten
+% \newline
+
+% Maar er zijn heel wat maatregelen die genomen kunnen worden om deze secrets te beschermen
+% \newline
+
+% deze maatregelen steunen niet altijd op nieuwe technologieen, maar eerder best practices en algemen principes uit de security wereld
+% \newline
+
+% spreken over de algemene principes van security dat deze steeds blijven gelden
+% \newline
+
+% least privilege
+% \newline
+
+% scheiden van netwerken en omgevingen
+% \newline
+
+% credential hygiene
+% \newline
+
+% valideren van dependencies
+% \newline
+
+% log en auditeer secrets gebruik
+% \newline
+
+% monitoren van de omgeving om nieuwe aanvallen te vermijden den plan te kunnen opstellen bij een volgende aanval
+% \newline
+
+% het onderzoek zou verder uitgebreid kunnen worden met het onderzoeken wat de impact zou zijn op de cd pipeline en hoe ver de aanvaller kan gaan
+% \newline
+
+% hoe gemakkelijk het is om uit de pipeline te ontsnappen en toegang te krijgen tot de omgeving
+% \newline
 

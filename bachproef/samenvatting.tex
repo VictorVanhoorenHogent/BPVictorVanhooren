@@ -36,7 +36,6 @@
 \IfLanguageName{english}{%
 \selectlanguage{dutch}
 \chapter*{Samenvatting}
-\lipsum[1-4]
 \selectlanguage{english}
 }{}
 
@@ -44,5 +43,4 @@
 % De samenvatting in de hoofdtaal van het document
 
 \chapter*{\IfLanguageName{dutch}{Samenvatting}{Abstract}}
-
-\lipsum[1-4]
+Secrets zijn niet meer weg te denken uit de Continuous integration/Continous delivery (CI/CD) pipeline. Softwareontwikkelaars maken dagelijks gebruik van pipelines waar gevoelige informatie wordt gebruikt. Tokens, wachtwoorden en sleutelparen zijn slechts enkele secrets die beschermd moeten worden. In deze thesis worden bestaande maatregelen en voorstellen voor beveiligingsoplossingen van secrets in een Jenkins-pipeline verder onderzocht. De meeste onderzoeken over dit onderwerp richten zich voornamelijk op het aanvallen van een CI/CD-omgeving. Er is echter weinig onderzoek waar de beveiliging zelf van deze omgeving bestudeerd wordt, meer specifiek het beveiligen van een Jenkins-omgeving. In deze scriptie wordt eerst onderzocht hoe secrets gestolen kunnen worden binnen een Jenkins-pipeline door middel van een Proof of concept (POC). Op basis van deze resultaten wordt bestudeerd hoe deze geheime informatie beter beschermd kan worden. De resultaten tonen aan dat het binnendringen van een CI/CD-pipeline niet heel erg moeilijk is, voor iemand met enige ervaring. De mate waarin een threat-actor toegang kan krijgen, hangt om te beginnen af van de volledigheid van de configuratie van de omgeving waarin deze pipeline wordt gebruikt. De manier waarop gevoelige informatie wordt behandeld en de naleving van goede \mbox{hygiëne} bij het behandelen van deze gevoelige informatie, spelen ook een belangrijke rol. Het blijft uiteraard belangrijk om de basisprincipes van security steeds in acht te nemen. De veiligheid van een CI/CD-omgeving wordt steeds bepaald door de zwakste schakel die erin aanwezig is. Deze zwakste schakel wordt nog steeds meestal begaan door een menselijke fout. Het is belangrijk dat personen die gebruik maken van de CI/CD-omgeving goed opgeleid zijn, strikte regels naleven en slechts toegang hebben tot de secrets volgens het principe van “least privilege”.
